@@ -1,0 +1,98 @@
+.cut-dialog {
+  width: min(1500px, 97vw);
+  max-width: 97vw;
+  height: 94vh;
+  max-height: 94vh;
+  padding: 20px;
+}
+.cut-dialog .dialog-heading p {
+  margin: 6px 0 0;
+  font-size: 13px;
+}
+.cut-workspace {
+  display: grid;
+  grid-template-columns: 240px minmax(280px, 1fr) 260px;
+  gap: 20px;
+  height: calc(100% - 155px);
+  min-height: 250px;
+}
+.cut-settings {
+  overflow: auto;
+  padding: 0 8px 12px 0;
+}
+.cut-settings label {
+  display: block;
+  font-size: 12px;
+  margin: 10px 0;
+}
+.cut-settings input[type="number"],
+.cut-settings select {
+  width: 100%;
+  padding: 7px;
+  border: 1px solid #ccd4ce;
+  border-radius: 5px;
+  background: white;
+}
+.cut-settings select[multiple] {
+  height: auto;
+  font-size: 12px;
+}
+.cut-settings input[type="checkbox"] {
+  width: auto;
+}
+.cut-settings details {
+  margin-bottom: 18px;
+}
+.cut-settings button {
+  font-size: 12px;
+}
+.cut-preview {
+  overflow: auto;
+  min-width: 0;
+  background: #eff1eb;
+  padding: 12px;
+  border-radius: 8px;
+}
+#ac-stage {
+  aspect-ratio: var(--cut-ratio);
+  max-height: 64vh;
+  margin: auto;
+  background: white;
+  width: auto;
+}
+#ac-stage .canvas-container,
+#ac-stage canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+#ac-issues {
+  white-space: pre-wrap;
+  font: 12px/1.5 system-ui;
+  color: #70491f;
+}
+.cut-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 12px;
+}
+#cut-message {
+  min-height: 22px;
+  font-size: 13px;
+  margin: 8px 0;
+}
+@media (max-width: 900px) {
+  .cut-workspace {
+    grid-template-columns: 190px minmax(240px, 1fr) 210px;
+    overflow: auto;
+  }
+  .cut-dialog {
+    padding: 12px;
+  }
+  .cut-footer {
+    gap: 5px;
+  }
+  .cut-footer button {
+    font-size: 12px;
+  }
+}

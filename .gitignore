@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.vite/
+.DS_Store
+.env
+.env.*
+!.env.example
+*.log
+# Private artwork, prepared jobs, captures, and vendor firmware never belong here.
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.bin
+*.plt
+fixtures/
+prepared-*/
+captures/
+firmware/
+pixcut-project*.json

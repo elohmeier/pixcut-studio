@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#244b40"><title>PixCut Studio</title></head>
+<body>
+  <header><a class="brand" href="./"><span class="brand-mark">✳</span> PixCut <b>Studio</b></a><span class="privacy">● Made here. Printed here. Your images stay on this device.</span><a href="https://github.com/elohmeier/pixcut-studio" target="_blank" rel="noreferrer">Project ↗</a></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">YOUR LITTLE PRINT WORKSHOP</p><h1>Little prints. Big personality.</h1><p>Arrange your artwork and bring a sheet to life.</p></div><span class="paper-tag" id="paper-tag">4 × 7 in <span>300 dpi · sticker paper</span></span></section>
+    <div class="workspace">
+      <aside class="panel tools"><h2>1 <span>Your artwork</span></h2>
+        <label>Paper<select id="media"><option value="sticker">4×7 sticker paper · print & cut</option><option value="photo">4×6 photo paper · print only</option></select></label>
+        <label class="button primary file-label">＋ Add images<input id="images" type="file" accept="image/png,image/jpeg,image/webp" multiple></label>
+        <p class="hint">Transparent PNGs make the best shaped stickers. Opaque images get a rectangular cut.</p>
+        <div class="button-row"><button id="demo">Try a sample</button><button id="clear">New sheet</button></div>
+        <hr><h3>Selected sticker</h3><p id="selection" class="hint">Select artwork on the sheet to edit it.</p>
+        <button id="auto-cut" class="wide">Automatic cuts & outline editor</button>
+        <label>Cut shape<select id="cut-mode"><option value="alpha">Follow transparency</option><option value="rectangle">Rectangle</option><option value="custom">Custom outline</option><option value="auto">Automatic / edited outlines</option></select></label>
+        <label>White border <span id="border-value">1 mm</span><input id="border" type="range" min="0" max="3" step="0.1" value="1"></label>
+        <div class="button-row"><button id="duplicate">Duplicate</button><button id="delete">Remove</button></div><button id="rotate" class="wide">Rotate 90° clockwise</button><button id="fit" class="wide">Fit artwork to page</button>
+        <button id="draw" class="wide">Draw a custom outline</button><button id="finish-draw" class="wide" hidden>Finish outline</button>
+        <p id="drawing-help" class="hint" hidden>Click around the artwork. Finish closes the polygon; Escape discards it. This replaces its other cut outlines.</p>
+        <hr><details><summary>Open a prepared sheet</summary><p class="hint">Import the exact .bin job from our Python workflow, or a JPEG + PLT pair. Its original bytes are preserved.</p>
+          <label class="button file-label">Open prepared job<input id="job-file" type="file" accept=".bin,.jpg,.jpeg,.plt" multiple></label>
+          <label class="button file-label">Import contours.json<input id="contours-file" type="file" accept=".json"></label><p class="hint">Contours use 1200 × 2100 sheet coordinates. Import onto a single full-sheet image; its cuts and artwork then move together.</p>
+        </details>
+        <hr><button id="save-project" class="wide">Save editable project</button><label class="button file-label">Open project<input id="open-project" type="file" accept=".json"></label>
+      </aside>
+      <section class="stage" aria-label="Sheet editor"><div class="stage-toolbar"><span id="sheet-summary">Empty sheet</span><label><input id="show-cuts" type="checkbox" checked> Cut outlines</label></div><div class="paper-wrap"><canvas id="editor"></canvas><canvas id="cuts" width="1200" height="2100" aria-hidden="true"></canvas></div><p class="stage-note">Drag to arrange · use the corners to resize · rotate with the top handle</p><div id="layout-message" role="status"></div></section>
+      <aside class="panel output"><h2>2 <span>Preview & print</span></h2><p class="hint">Green lines show the cuts. They won’t appear in the printed image.</p>
+        <button id="preview" class="wide">Review sheet</button><button id="export" class="wide">Download print/cut job</button>
+        <hr><h3>Your printer</h3><div id="connection" class="connection">○ Not connected</div><div class="button-row"><button id="usb">Connect USB</button><button id="ble">Connect Bluetooth</button></div><p id="support" class="hint"></p>
+        <div class="button-row"><button id="status">Check status</button><button id="disconnect">Disconnect</button></div>
+        <hr><p id="job-status" role="status" aria-live="polite">Connect a Liene PixCut S1 when you’re ready.</p><progress id="progress" max="1" value="0" hidden></progress>
+        <label class="review-check"><input id="approved" type="checkbox"> <span id="approval-label">I checked the outlines and loaded 4×7 sticker paper.</span></label>
+        <button id="print" class="primary wide" disabled>Print & cut one sheet →</button>
+        <button id="stop-monitor" class="wide" hidden>Stop monitoring (job continues)</button>
+        <div id="recovery" hidden><p class="hint">A sheet has been submitted. Confirm it finished, or check its progress before starting another.</p><button id="confirm-finished" class="wide">My sheet finished printing</button><button id="resume" class="wide">Check printing progress</button><details><summary>Cancel or resolve this job</summary><button id="cancel" class="wide">Cancel existing job</button><button id="forget" class="wide">Clear record after checking printer</button></details></div>
+        <details class="diagnostics"><summary>Activity</summary><pre id="log"></pre></details>
+      </aside>
+    </div>
+  </main>
+  <footer>Designed for Liene PixCut S1 · Independent, unofficial software <span>Local by design</span></footer>
+  <dialog id="preview-dialog"><div class="dialog-heading"><h2>One lovely sheet, ready to make.</h2><button id="close-preview" aria-label="Close preview">✕</button></div><p id="preview-help">Check every green outline before printing.</p><img id="preview-image" alt="Print sheet preview"><button id="accept-preview" class="primary">Looks good</button></dialog>
+  <dialog id="cut-dialog" class="cut-dialog">
+    <div class="dialog-heading"><div><h2>Automatic cuts</h2><p id="ac-summary">Detecting artwork…</p></div><button id="ac-close" aria-label="Close cut editor">✕</button></div>
+    <p id="cut-message" role="status" aria-live="polite"></p>
+    <div class="cut-workspace">
+      <section class="cut-settings">
+        <details open><summary>1 · Detect artwork</summary>
+          <label>Starting preset<select id="ac-preset"><option value="detailed">Detailed collage</option><option value="rounded">Larger, rounded motifs</option><option value="separate">Keep small decorations separate</option></select></label>
+          <label>Background mode<select id="ac-mode"><option value="auto">Auto: alpha or white background</option><option value="alpha">Transparency only</option><option value="white">White background (Python-style)</option><option value="color">Background color</option></select></label>
+          <label>Background color<input id="ac-background" type="color" value="#ffffff"></label>
+          <label>Color distance<input id="ac-tolerance" type="number" min="1" max="255" value="35"></label>
+          <label>Saturation threshold ↓ detects faint color<input id="ac-saturation" type="number" min="0" max="255" value="35"></label>
+          <label>Darkness threshold ↑ detects pale gray<input id="ac-darkness" type="number" min="0" max="255" value="175"></label>
+          <label>Alpha threshold<input id="ac-alpha" type="number" min="1" max="255" value="128"></label>
+          <label>Minimum feature area (mm²)<input id="ac-minArea" type="number" min="0" max="10" step="0.01" value="0.03"></label>
+          <label>Join distance (mm)<input id="ac-join" type="number" min="0" max="5" step="0.1" value="1.1"></label>
+          <label><input id="ac-keepSmall" type="checkbox"> Keep small decorations separate</label>
+          <label>Small decoration area (mm²)<input id="ac-smallArea" type="number" min="0" max="50" step="0.1" value="2"></label>
+          <button id="ac-detect" class="wide">Detect again</button><button id="ac-seeds" class="wide" hidden>Use existing outlines as regions</button>
+        </details>
+        <details open><summary>2 · Refine outlines</summary>
+          <label>White border (mm)<input id="ac-border" type="number" min="0" max="5" step="0.1" value="0.6"></label>
+          <label>Bridge small gaps (mm)<input id="ac-bridge" type="number" min="0" max="5" step="0.1" value="1.1"></label>
+          <label>Smoothing radius (mm)<input id="ac-smooth" type="number" min="0" max="3" step="0.1" value="0.4"></label>
+          <label>Minimum cut spacing (mm)<input id="ac-gap" type="number" min="0" max="3" step="0.05" value="0.35"></label>
+          <label>Simplification tolerance (mm)<input id="ac-detail" type="number" min="0" max="1" step="0.01" value="0.06"></label>
+          <button id="ac-update" class="wide">Update contours · keep locked edits</button>
+        </details>
+      </section>
+      <section class="cut-preview"><div id="ac-stage"><canvas id="cut-canvas"></canvas></div><p class="hint">Click artwork to select its group. Shift-click to select more. Blank white areas inside a cut also select it.</p><pre id="ac-issues" role="status"></pre></section>
+      <section class="cut-settings">
+        <h3>3 · Correct grouping</h3><label>Groups · ⌘/Ctrl-click for multiple<select id="ac-groups" multiple size="7"></select></label>
+        <button id="ac-merge" class="wide">Merge selected groups</button><button id="ac-split" class="wide">Split group into connected pieces</button>
+        <label>Pieces in the first selected group<select id="ac-components" multiple size="5"></select></label><label>Assign selected pieces to<select id="ac-destination"></select></label><button id="ac-assign" class="wide">Move pieces to group</button><button id="ac-exclude" class="wide">Exclude pieces from cuts</button><button id="ac-restore" class="wide">Restore excluded pieces</button>
+        <hr><h3>4 · Edit an outline</h3><label>Outline<select id="ac-path"></select></label><button id="ac-edit" class="wide">Edit outline points</button>
+        <label>Vertex<select id="ac-point"></select></label><div class="button-row"><button id="ac-insert">Insert after</button><button id="ac-remove">Delete point</button></div>
+        <button id="ac-reset" class="wide">Reset selected to automatic</button><p class="hint">Manual edits lock a group. Updating parameters preserves locked outlines; reset unlocks them.</p>
+      </section>
+    </div>
+    <div class="cut-footer"><button id="ac-undo">Undo</button><button id="ac-redo">Redo</button><button id="ac-cancel" disabled>Cancel analysis</button><button id="ac-apply" class="primary">Validate & apply cuts</button></div>
+  </dialog>
+  <script type="module" src="/src/main.js"></script>
+</body></html>
