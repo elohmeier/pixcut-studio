@@ -1,0 +1,250 @@
+{
+  "reference": "/var/home/gordon/repos/github.com/elohmeier/pixcut-studio/ml/data/manual/pastel-fairy-original.json",
+  "predictions": "/tmp/pixcut-dis5k-pastel-v10-merged/instances.npz",
+  "reference_instances": 36,
+  "reviewed_contours": 21,
+  "predicted_instances": 39,
+  "matched_instances_iou_at_least_0_1": 36,
+  "predicted_overlap_px": 0,
+  "mean_reviewed_iou": 0.9307,
+  "mean_reviewed_boundary_f1_within_5px": 0.9974,
+  "per_instance": [
+    {
+      "id": "fairy-top",
+      "quality": "needs-review",
+      "matched_prediction": "3",
+      "iou": 0.9182
+    },
+    {
+      "id": "heart-top-left",
+      "quality": "nested-or-touching",
+      "matched_prediction": "2",
+      "iou": 0.8638
+    },
+    {
+      "id": "star-top-left",
+      "quality": "reviewed",
+      "matched_prediction": "6",
+      "iou": 0.8979,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "sparkle-top",
+      "quality": "reviewed",
+      "matched_prediction": "7",
+      "iou": 0.8828,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "snowflake-top",
+      "quality": "reviewed",
+      "matched_prediction": "1",
+      "iou": 0.9547,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "unicorn-top",
+      "quality": "needs-review",
+      "matched_prediction": "4",
+      "iou": 0.6787
+    },
+    {
+      "id": "heart-top-right",
+      "quality": "reviewed",
+      "matched_prediction": "5",
+      "iou": 0.953,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "star-top-right",
+      "quality": "nested-or-touching",
+      "matched_prediction": "8",
+      "iou": 0.7796
+    },
+    {
+      "id": "star-blue-upper",
+      "quality": "reviewed",
+      "matched_prediction": "12",
+      "iou": 0.9231,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "star-gold-upper",
+      "quality": "reviewed",
+      "matched_prediction": "14",
+      "iou": 0.9475,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "gem-purple-upper",
+      "quality": "reviewed",
+      "matched_prediction": "15",
+      "iou": 0.9315,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "snowflake-upper-right",
+      "quality": "reviewed",
+      "matched_prediction": "16",
+      "iou": 0.9641,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "heart-rainbow",
+      "quality": "reviewed",
+      "matched_prediction": "18",
+      "iou": 0.9579,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "sparkle-left-upper",
+      "quality": "reviewed",
+      "matched_prediction": "17",
+      "iou": 0.8891,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "star-blue-left",
+      "quality": "reviewed",
+      "matched_prediction": "20",
+      "iou": 0.9081,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "bow-purple",
+      "quality": "nested-or-touching",
+      "matched_prediction": "21",
+      "iou": 0.9017
+    },
+    {
+      "id": "gem-purple-center",
+      "quality": "reviewed",
+      "matched_prediction": "22",
+      "iou": 0.9296,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "unicorn-lower",
+      "quality": "needs-review",
+      "matched_prediction": "24",
+      "iou": 0.9304
+    },
+    {
+      "id": "gem-blue-left",
+      "quality": "nested-or-touching",
+      "matched_prediction": "27",
+      "iou": 0.7201
+    },
+    {
+      "id": "magic-swirl",
+      "quality": "needs-review",
+      "matched_prediction": "26",
+      "iou": 0.8871
+    },
+    {
+      "id": "gem-gold-center",
+      "quality": "reviewed",
+      "matched_prediction": "28",
+      "iou": 0.932,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "heart-pink-middle",
+      "quality": "reviewed",
+      "matched_prediction": "29",
+      "iou": 0.9527,
+      "boundary_f1_within_5px": 0.9795
+    },
+    {
+      "id": "gem-purple-lower",
+      "quality": "reviewed",
+      "matched_prediction": "32",
+      "iou": 0.9401,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "star-gold-lower",
+      "quality": "box-clipped",
+      "matched_prediction": "33",
+      "iou": 0.6625
+    },
+    {
+      "id": "snowflake-lower-left",
+      "quality": "reviewed",
+      "matched_prediction": "31",
+      "iou": 0.9597,
+      "boundary_f1_within_5px": 0.9925
+    },
+    {
+      "id": "rainbow-bottom-left",
+      "quality": "needs-review",
+      "matched_prediction": "34",
+      "iou": 0.964
+    },
+    {
+      "id": "sparkle-bottom-left",
+      "quality": "reviewed",
+      "matched_prediction": "35",
+      "iou": 0.8926,
+      "boundary_f1_within_5px": 0.9736
+    },
+    {
+      "id": "shooting-star-bottom",
+      "quality": "needs-review",
+      "matched_prediction": "36",
+      "iou": 0.962
+    },
+    {
+      "id": "heart-bottom-left",
+      "quality": "reviewed",
+      "matched_prediction": "38",
+      "iou": 0.9548,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "star-blue-bottom",
+      "quality": "reviewed",
+      "matched_prediction": "37",
+      "iou": 0.9321,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "heart-bottom-center",
+      "quality": "reviewed",
+      "matched_prediction": "40",
+      "iou": 0.94,
+      "boundary_f1_within_5px": 1.0
+    },
+    {
+      "id": "heart-bottom-right",
+      "quality": "nested-or-touching",
+      "matched_prediction": "39",
+      "iou": 0.8494
+    },
+    {
+      "id": "princess-ice",
+      "quality": "needs-review",
+      "matched_prediction": "19",
+      "iou": 0.9637
+    },
+    {
+      "id": "star-blue-right",
+      "quality": "nested-or-touching",
+      "matched_prediction": "25",
+      "iou": 0.7108
+    },
+    {
+      "id": "sparkle-right-middle",
+      "quality": "nested-or-touching",
+      "matched_prediction": "23",
+      "iou": 0.7024
+    },
+    {
+      "id": "sparkle-right-lower",
+      "quality": "reviewed",
+      "matched_prediction": "30",
+      "iou": 0.9016,
+      "boundary_f1_within_5px": 1.0
+    }
+  ]
+}

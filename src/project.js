@@ -49,6 +49,17 @@ export function validateAnalysisData(data) {
       c.bounds[1] + c.bounds[3] > data.height
     )
       throw Error("Invalid saved component.");
+    if (c.splitLines && (
+      !Array.isArray(c.splitLines) || c.splitLines.length > 20 ||
+      c.splitLines.some((line) =>
+        !line || !Array.isArray(line.points) || line.points.length !== 2 ||
+        line.points.some((p) => !Array.isArray(p) || p.length !== 2 ||
+          !p.every(Number.isFinite) || p[0] < 0 || p[1] < 0 ||
+          p[0] >= data.width || p[1] >= data.height) ||
+        (line.points[0][0] - line.points[1][0]) ** 2 +
+          (line.points[0][1] - line.points[1][1]) ** 2 < 100 ||
+        !Number.isFinite(line.radius) || line.radius < 1 || line.radius > 203)))
+      throw Error("Invalid saved split line.");
     ids.add(c.id);
     let end = 0;
     for (const run of c.runs) {

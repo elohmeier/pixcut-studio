@@ -1,0 +1,131 @@
+{
+  "image": "grandma-portraits",
+  "image_size": [
+    948,
+    1659
+  ],
+  "trace_defaults": {
+    "polarity": "dark",
+    "threshold": 253,
+    "close_px": 3,
+    "simplify_px": 1.2,
+    "offset_px": -4
+  },
+  "split_policy": "The entire grandma-portraits sheet is excluded from model training. Close vertical seams are uncertain and must be reviewed separately.",
+  "annotations": [
+    {
+      "id": "r1c1",
+      "box": [
+        20,
+        4,
+        475,
+        455
+      ],
+      "seed": [
+        285,
+        264
+      ],
+      "quality": "reviewed",
+      "note": "Outer edge visually checked; small contact with the next row near the bottom is excluded from fine-cut conclusions."
+    },
+    {
+      "id": "r1c2",
+      "box": [
+        476,
+        2,
+        930,
+        493
+      ],
+      "seed": [
+        700,
+        250
+      ],
+      "quality": "reviewed",
+      "note": "Outer edge visually checked; small contact with the next row near the bottom is excluded from fine-cut conclusions."
+    },
+    {
+      "id": "r2c1",
+      "box": [
+        27,
+        451,
+        457,
+        872
+      ],
+      "seed": [
+        280,
+        680
+      ],
+      "quality": "seam-uncertain"
+    },
+    {
+      "id": "r2c2",
+      "box": [
+        457,
+        480,
+        908,
+        899
+      ],
+      "seed": [
+        687,
+        690
+      ],
+      "quality": "seam-uncertain"
+    },
+    {
+      "id": "r3c1",
+      "box": [
+        27,
+        835,
+        458,
+        1281
+      ],
+      "seed": [
+        260,
+        1080
+      ],
+      "quality": "seam-uncertain"
+    },
+    {
+      "id": "r3c2",
+      "box": [
+        437,
+        848,
+        936,
+        1290
+      ],
+      "seed": [
+        702,
+        1085
+      ],
+      "quality": "seam-uncertain"
+    },
+    {
+      "id": "r4c1",
+      "box": [
+        20,
+        1255,
+        404,
+        1654
+      ],
+      "seed": [
+        240,
+        1460
+      ],
+      "quality": "seam-uncertain"
+    },
+    {
+      "id": "r4c2",
+      "box": [
+        397,
+        1252,
+        938,
+        1653
+      ],
+      "seed": [
+        705,
+        1455
+      ],
+      "quality": "seam-uncertain"
+    }
+  ]
+}

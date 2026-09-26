@@ -1,0 +1,28 @@
+{
+  "model": "YOLO26n class-agnostic sticker box detector",
+  "ultralytics": "8.4.163",
+  "input_size": 512,
+  "training": {
+    "source": "synthetic collages from four user-provided training sheets",
+    "sheets": 480,
+    "visible_stickers": 4568,
+    "epochs": 16,
+    "batch": 16,
+    "seed": 2026
+  },
+  "synthetic_validation": {
+    "source": "pirate-icons source sheet, excluded from training",
+    "sheets": 80,
+    "visible_stickers": 757,
+    "precision": 0.994,
+    "recall": 0.996,
+    "map50": 0.995,
+    "map50_95": 0.968
+  },
+  "exports": {
+    "pytorch": "model.pt",
+    "onnx": "model.onnx",
+    "onnx_opset": 18
+  },
+  "warning": "Synthetic validation precision is much higher than real-sheet instance precision; nested decorations produce extra boxes."
+}

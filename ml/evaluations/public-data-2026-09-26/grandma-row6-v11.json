@@ -1,0 +1,35 @@
+{
+  "split": "confirm",
+  "threshold": 0.5,
+  "instance_selection": "predicted connected component overlapping the target label",
+  "stickers": [
+    "r6c1",
+    "r6c2",
+    "r6c3",
+    "r6c4"
+  ],
+  "models": {
+    "sticker-boundary-v11-no-public-control": {
+      "per_sticker": {
+        "r6c1": {
+          "foreground_iou": 0.9244,
+          "boundary_f1_within_5px": 0.9093
+        },
+        "r6c2": {
+          "foreground_iou": 0.9299,
+          "boundary_f1_within_5px": 0.9206
+        },
+        "r6c3": {
+          "foreground_iou": 0.925,
+          "boundary_f1_within_5px": 0.9213
+        },
+        "r6c4": {
+          "foreground_iou": 0.9055,
+          "boundary_f1_within_5px": 0.823
+        }
+      },
+      "mean_foreground_iou": 0.9212,
+      "mean_boundary_f1_within_5px": 0.8935
+    }
+  }
+}

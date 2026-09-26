@@ -1,0 +1,559 @@
+{
+  "input": "../../sheets/grandma-portraits.jpeg",
+  "objectScale": 1.139240506329114,
+  "raster": {
+    "factor": 1,
+    "pad": 125,
+    "pxPerMM": 10.36745406824147,
+    "width": 1198,
+    "height": 1909,
+    "contentWidth": 948,
+    "contentHeight": 1659,
+    "contentRect": [
+      125,
+      125,
+      948,
+      1659
+    ]
+  },
+  "mode": "white",
+  "seconds": 1.511,
+  "components": 113,
+  "excludedComponentIds": [],
+  "groups": [
+    {
+      "number": 1,
+      "componentIds": [
+        18,
+        39,
+        81,
+        99,
+        109,
+        145,
+        167
+      ],
+      "outlines": 1,
+      "vertices": [
+        262
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 2,
+      "componentIds": [
+        20,
+        30
+      ],
+      "outlines": 1,
+      "vertices": [
+        42
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 3,
+      "componentIds": [
+        21,
+        41,
+        73,
+        89,
+        98,
+        111,
+        112,
+        144,
+        181
+      ],
+      "outlines": 1,
+      "vertices": [
+        225
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 4,
+      "componentIds": [
+        26
+      ],
+      "outlines": 1,
+      "vertices": [
+        13
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 5,
+      "componentIds": [
+        38
+      ],
+      "outlines": 1,
+      "vertices": [
+        38
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 6,
+      "componentIds": [
+        51
+      ],
+      "outlines": 1,
+      "vertices": [
+        21
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 7,
+      "componentIds": [
+        58
+      ],
+      "outlines": 1,
+      "vertices": [
+        17
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 8,
+      "componentIds": [
+        59,
+        63
+      ],
+      "outlines": 1,
+      "vertices": [
+        27
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 9,
+      "componentIds": [
+        60
+      ],
+      "outlines": 1,
+      "vertices": [
+        28
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 10,
+      "componentIds": [
+        67
+      ],
+      "outlines": 1,
+      "vertices": [
+        24
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 11,
+      "componentIds": [
+        68
+      ],
+      "outlines": 1,
+      "vertices": [
+        22
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 12,
+      "componentIds": [
+        184
+      ],
+      "outlines": 1,
+      "vertices": [
+        15
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 13,
+      "componentIds": [
+        194,
+        241,
+        257,
+        259,
+        260,
+        264,
+        268,
+        270,
+        275,
+        286,
+        292,
+        297,
+        298,
+        322,
+        335,
+        347,
+        358
+      ],
+      "outlines": 1,
+      "vertices": [
+        229
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 14,
+      "componentIds": [
+        198
+      ],
+      "outlines": 1,
+      "vertices": [
+        25
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 15,
+      "componentIds": [
+        208,
+        323,
+        331
+      ],
+      "outlines": 1,
+      "vertices": [
+        220
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 16,
+      "componentIds": [
+        215
+      ],
+      "outlines": 1,
+      "vertices": [
+        24
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 17,
+      "componentIds": [
+        221
+      ],
+      "outlines": 1,
+      "vertices": [
+        27
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 18,
+      "componentIds": [
+        222
+      ],
+      "outlines": 1,
+      "vertices": [
+        21
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 19,
+      "componentIds": [
+        223
+      ],
+      "outlines": 1,
+      "vertices": [
+        28
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 20,
+      "componentIds": [
+        230
+      ],
+      "outlines": 1,
+      "vertices": [
+        23
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 21,
+      "componentIds": [
+        238
+      ],
+      "outlines": 1,
+      "vertices": [
+        19
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 22,
+      "componentIds": [
+        255
+      ],
+      "outlines": 1,
+      "vertices": [
+        18
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 23,
+      "componentIds": [
+        277
+      ],
+      "outlines": 1,
+      "vertices": [
+        24
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 24,
+      "componentIds": [
+        389,
+        430,
+        431,
+        432,
+        433,
+        435,
+        446,
+        447,
+        450,
+        452,
+        483,
+        493,
+        498,
+        512
+      ],
+      "outlines": 1,
+      "vertices": [
+        216
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 25,
+      "componentIds": [
+        396,
+        475,
+        522,
+        525,
+        527
+      ],
+      "outlines": 1,
+      "vertices": [
+        238
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 26,
+      "componentIds": [
+        403
+      ],
+      "outlines": 1,
+      "vertices": [
+        9
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 27,
+      "componentIds": [
+        408
+      ],
+      "outlines": 1,
+      "vertices": [
+        25
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 28,
+      "componentIds": [
+        414
+      ],
+      "outlines": 1,
+      "vertices": [
+        33
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 29,
+      "componentIds": [
+        425,
+        444
+      ],
+      "outlines": 1,
+      "vertices": [
+        53
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 30,
+      "componentIds": [
+        434
+      ],
+      "outlines": 1,
+      "vertices": [
+        28
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 31,
+      "componentIds": [
+        558
+      ],
+      "outlines": 1,
+      "vertices": [
+        27
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 32,
+      "componentIds": [
+        560
+      ],
+      "outlines": 1,
+      "vertices": [
+        23
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 33,
+      "componentIds": [
+        565,
+        612,
+        621,
+        633,
+        637,
+        641,
+        649,
+        666,
+        676
+      ],
+      "outlines": 1,
+      "vertices": [
+        333
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 34,
+      "componentIds": [
+        569
+      ],
+      "outlines": 1,
+      "vertices": [
+        29
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 35,
+      "componentIds": [
+        570,
+        605,
+        618,
+        642,
+        653,
+        662,
+        670,
+        672,
+        680,
+        684,
+        694,
+        701
+      ],
+      "outlines": 1,
+      "vertices": [
+        243
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 36,
+      "componentIds": [
+        580
+      ],
+      "outlines": 1,
+      "vertices": [
+        34
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 37,
+      "componentIds": [
+        583
+      ],
+      "outlines": 1,
+      "vertices": [
+        33
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 38,
+      "componentIds": [
+        594
+      ],
+      "outlines": 1,
+      "vertices": [
+        24
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 39,
+      "componentIds": [
+        600
+      ],
+      "outlines": 1,
+      "vertices": [
+        21
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 40,
+      "componentIds": [
+        604
+      ],
+      "outlines": 1,
+      "vertices": [
+        24
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 41,
+      "componentIds": [
+        607
+      ],
+      "outlines": 1,
+      "vertices": [
+        37
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 42,
+      "componentIds": [
+        620
+      ],
+      "outlines": 1,
+      "vertices": [
+        22
+      ],
+      "clippedPixels": 0
+    }
+  ],
+  "issues": []
+}

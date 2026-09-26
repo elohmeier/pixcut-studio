@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "note": "Reviewed pseudo-labels from the cut CLI. Groups are 1-based and refer to the saved analysis.json. These are approximate colored-artwork outlines, not hand-traced cut borders.",
+  "sheets": [
+    {"name": "gym-couple", "split": "train", "groups": [1, 2, 3, 4, 5, 6], "outer_margin_px": 8},
+    {"name": "baby-bear", "split": "train", "groups": [1, 2, 3, 4, 5, 6, 7, 8], "outer_margin_px": 12},
+    {"name": "fairy-unicorns", "split": "train", "exclude_groups": [11, 13, 29, 30, 42], "outer_margin_px": 5},
+    {"name": "pirate-girl", "split": "train", "groups": [1], "outer_margin_px": 10},
+    {"name": "pirate-icons", "split": "validation", "outer_margin_px": 6},
+    {"name": "grandma-grid", "split": "review", "reason": "Contours cut through nearly white hair; labels need correction before training."},
+    {"name": "grandma-portraits", "split": "review", "reason": "One intended sticker is fragmented into many pseudo-label groups."}
+  ]
+}

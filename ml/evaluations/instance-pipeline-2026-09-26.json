@@ -1,0 +1,148 @@
+{
+  "date": "2026-09-26",
+  "status": "exploratory development evaluation",
+  "architecture": "YOLO26n overview plus 512-pixel tiles for class-agnostic box proposals; 320-pixel box-conditioned U-Net crop for one outer rim; exclusive pixel ownership and outer-path tracing",
+  "detector": {
+    "training": "480 synthetic train sheets (4568 visible stickers) from gym-couple, baby-bear, fairy-unicorns, pirate-girl; 80 synthetic pirate-icon validation sheets (757 stickers)",
+    "training_validation": {
+      "precision": 0.994,
+      "recall": 0.996,
+      "map50": 0.995,
+      "map50_95": 0.968
+    },
+    "model_pt_sha256": "298770ec0b0ce0db1eb8cd7bb7f45051e965183c5710139167b10360ea00bde8",
+    "model_onnx_sha256": "7e1dcb037b69c5f37415d3d53898b40b6c407c2cfdb76cb7c86d833b49043026",
+    "real_boxes": {
+      "pastel": {
+        "intended": 36,
+        "predicted": 68,
+        "matched_iou_at_least_0_3": 36,
+        "matched_iou_at_least_0_5": 36,
+        "mean_matched_box_iou": 0.9166
+      },
+      "grandma": {
+        "intended": 8,
+        "predicted": 26,
+        "matched_iou_at_least_0_3": 8,
+        "matched_iou_at_least_0_5": 8,
+        "mean_matched_box_iou": 0.954
+      },
+      "pastel_onnx": {
+        "intended": 36,
+        "predicted": 67,
+        "matched_iou_at_least_0_3": 36,
+        "matched_iou_at_least_0_5": 36,
+        "mean_matched_box_iou": 0.9188
+      }
+    }
+  },
+  "prompt_refiner": {
+    "model_pt_sha256": "c21fb2faeaa6380b4bd83ff499ad53afeb56e2ffd72b8d7a956af53314a999e3",
+    "model_onnx_sha256": "885bf48f0e8bc52c47d003dbd974350ac94055a9036fa5538d53f8b38f1cdb49",
+    "onnx_external_data_sha256": "8c9ca591b9e34b6a85ee4ed1a0b90c4ae0e1c4ffaa976524bdfa692f5f632c5e",
+    "best_step": 175,
+    "validation_synthetic_iou": 0.7148,
+    "validation_grandma_grid_row3_iou": 0.9688,
+    "onnx_max_absolute_error": 0.0001091
+  },
+  "sheets": {
+    "pastel": {
+      "baseline_v11_watershed": {
+        "reference_instances": 36,
+        "reviewed_contours": 21,
+        "predicted_instances": 38,
+        "matched_instances_iou_at_least_0_1": 36,
+        "mean_reviewed_iou": 0.9294,
+        "mean_reviewed_boundary_f1_within_5px": 0.9973,
+        "predicted_overlap_px": 0
+      },
+      "reference_boxes": {
+        "run": {
+          "candidate_boxes": 36,
+          "instance_paths": 36,
+          "mask_overlap_px": 0,
+          "filled_path_overlap_px": 11336
+        },
+        "evaluation": {
+          "reference_instances": 36,
+          "reviewed_contours": 21,
+          "predicted_instances": 36,
+          "matched_instances_iou_at_least_0_1": 36,
+          "mean_reviewed_iou": 0.8971,
+          "mean_reviewed_boundary_f1_within_5px": 0.9602,
+          "predicted_overlap_px": 0
+        }
+      },
+      "automatic_boxes": {
+        "run": {
+          "candidate_boxes": 68,
+          "instance_paths": 37,
+          "mask_overlap_px": 0,
+          "filled_path_overlap_px": 11485
+        },
+        "evaluation": {
+          "reference_instances": 36,
+          "reviewed_contours": 21,
+          "predicted_instances": 37,
+          "matched_instances_iou_at_least_0_1": 36,
+          "mean_reviewed_iou": 0.8889,
+          "mean_reviewed_boundary_f1_within_5px": 0.9475,
+          "predicted_overlap_px": 0
+        }
+      }
+    },
+    "grandma": {
+      "baseline_v11_watershed": {
+        "reference_instances": 8,
+        "reviewed_contours": 2,
+        "predicted_instances": 8,
+        "matched_instances_iou_at_least_0_1": 8,
+        "mean_reviewed_iou": 0.9533,
+        "mean_reviewed_boundary_f1_within_5px": 0.8293,
+        "predicted_overlap_px": 0
+      },
+      "reference_boxes": {
+        "run": {
+          "candidate_boxes": 8,
+          "instance_paths": 8,
+          "mask_overlap_px": 0,
+          "filled_path_overlap_px": 108
+        },
+        "evaluation": {
+          "reference_instances": 8,
+          "reviewed_contours": 2,
+          "predicted_instances": 8,
+          "matched_instances_iou_at_least_0_1": 8,
+          "mean_reviewed_iou": 0.9594,
+          "mean_reviewed_boundary_f1_within_5px": 0.8499,
+          "predicted_overlap_px": 0
+        }
+      },
+      "automatic_boxes": {
+        "run": {
+          "candidate_boxes": 26,
+          "instance_paths": 26,
+          "mask_overlap_px": 0,
+          "filled_path_overlap_px": 7141
+        },
+        "evaluation": {
+          "reference_instances": 8,
+          "reviewed_contours": 2,
+          "predicted_instances": 26,
+          "matched_instances_iou_at_least_0_1": 8,
+          "mean_reviewed_iou": 0.9184,
+          "mean_reviewed_boundary_f1_within_5px": 0.7979,
+          "predicted_overlap_px": 0
+        }
+      }
+    }
+  },
+  "limitations": [
+    "The real full-sheet reference contours are development drafts; only reviewed isolated contours contribute to mean IoU and F1.",
+    "Both real sheets were inspected during model selection and pipeline analysis; results are not an untouched test.",
+    "Detector precision on synthetic validation does not represent real sheet instance precision: nested decorations become extra boxes.",
+    "Prompted masks are exclusive in raster form, but traced filled paths can overlap; these results are not cut safe.",
+    "The prompt model uses grandma-grid manual training stickers and row-3 review stickers for checkpoint selection; pastel and grandma-portraits are not direct training images.",
+    "Browser detector was not changed."
+  ]
+}

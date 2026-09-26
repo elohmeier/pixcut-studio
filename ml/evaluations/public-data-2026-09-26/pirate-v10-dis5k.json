@@ -1,0 +1,18 @@
+{
+  "pirate-icons": {
+    "foreground_iou": 0.9597,
+    "boundary_f1": {
+      "0.2": 0.4652,
+      "0.35": 0.5211,
+      "0.5": 0.5569
+    },
+    "calibrated": {
+      "foreground_threshold": 0.8,
+      "foreground_iou": 0.9667,
+      "boundary_threshold": 0.775,
+      "boundary_f1": 0.6101
+    },
+    "target_foreground_fraction": 0.7706,
+    "classical_unexpanded_foreground_iou": 0.8875
+  }
+}

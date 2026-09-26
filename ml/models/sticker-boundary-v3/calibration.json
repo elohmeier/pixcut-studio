@@ -1,0 +1,6 @@
+{
+  "source": "pirate-icons",
+  "label_warning": "Thresholds optimized on approximate expanded CLI masks",
+  "foreground_threshold": 0.725,
+  "boundary_threshold": 0.8
+}

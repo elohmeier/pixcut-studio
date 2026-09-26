@@ -1,0 +1,305 @@
+{
+  "input": "../../sheets/grandma-grid.jpeg",
+  "objectScale": 1.0546875,
+  "raster": {
+    "factor": 1,
+    "pad": 135,
+    "pxPerMM": 11.198600174978129,
+    "width": 1294,
+    "height": 1806,
+    "contentWidth": 1024,
+    "contentHeight": 1536,
+    "contentRect": [
+      135,
+      135,
+      1024,
+      1536
+    ]
+  },
+  "mode": "white",
+  "seconds": 1.53,
+  "components": 39,
+  "excludedComponentIds": [],
+  "groups": [
+    {
+      "number": 1,
+      "componentIds": [
+        1
+      ],
+      "outlines": 1,
+      "vertices": [
+        93
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 2,
+      "componentIds": [
+        2
+      ],
+      "outlines": 1,
+      "vertices": [
+        86
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 3,
+      "componentIds": [
+        3
+      ],
+      "outlines": 1,
+      "vertices": [
+        80
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 4,
+      "componentIds": [
+        4
+      ],
+      "outlines": 1,
+      "vertices": [
+        76
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 5,
+      "componentIds": [
+        17,
+        36
+      ],
+      "outlines": 1,
+      "vertices": [
+        70
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 6,
+      "componentIds": [
+        18
+      ],
+      "outlines": 1,
+      "vertices": [
+        97
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 7,
+      "componentIds": [
+        19
+      ],
+      "outlines": 1,
+      "vertices": [
+        79
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 8,
+      "componentIds": [
+        20
+      ],
+      "outlines": 1,
+      "vertices": [
+        84
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 9,
+      "componentIds": [
+        37
+      ],
+      "outlines": 1,
+      "vertices": [
+        100
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 10,
+      "componentIds": [
+        38
+      ],
+      "outlines": 1,
+      "vertices": [
+        103
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 11,
+      "componentIds": [
+        39,
+        46,
+        49,
+        50,
+        53,
+        54,
+        55,
+        59,
+        65,
+        66,
+        72,
+        73
+      ],
+      "outlines": 1,
+      "vertices": [
+        84
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 12,
+      "componentIds": [
+        40
+      ],
+      "outlines": 1,
+      "vertices": [
+        89
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 13,
+      "componentIds": [
+        76
+      ],
+      "outlines": 1,
+      "vertices": [
+        124
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 14,
+      "componentIds": [
+        77
+      ],
+      "outlines": 1,
+      "vertices": [
+        110
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 15,
+      "componentIds": [
+        78,
+        92
+      ],
+      "outlines": 1,
+      "vertices": [
+        89
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 16,
+      "componentIds": [
+        79
+      ],
+      "outlines": 1,
+      "vertices": [
+        98
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 17,
+      "componentIds": [
+        98
+      ],
+      "outlines": 1,
+      "vertices": [
+        76
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 18,
+      "componentIds": [
+        99
+      ],
+      "outlines": 1,
+      "vertices": [
+        77
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 19,
+      "componentIds": [
+        100
+      ],
+      "outlines": 1,
+      "vertices": [
+        79
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 20,
+      "componentIds": [
+        102,
+        110
+      ],
+      "outlines": 1,
+      "vertices": [
+        97
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 21,
+      "componentIds": [
+        116
+      ],
+      "outlines": 1,
+      "vertices": [
+        100
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 22,
+      "componentIds": [
+        117,
+        130
+      ],
+      "outlines": 1,
+      "vertices": [
+        104
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 23,
+      "componentIds": [
+        118
+      ],
+      "outlines": 1,
+      "vertices": [
+        100
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 24,
+      "componentIds": [
+        120
+      ],
+      "outlines": 1,
+      "vertices": [
+        98
+      ],
+      "clippedPixels": 0
+    }
+  ],
+  "issues": []
+}

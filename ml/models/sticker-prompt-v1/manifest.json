@@ -1,0 +1,35 @@
+{
+  "model": "PromptedStickerNet",
+  "base": "/var/home/gordon/repos/github.com/elohmeier/pixcut-studio/ml/models/sticker-boundary-v11-no-public-control/model.pt",
+  "base_sha256": "cd6730468d31c1b2c180fd8f72c181868936843713e054ef95ff928ecaff828d",
+  "steps": 220,
+  "batch": 8,
+  "size": 320,
+  "seed": 2026,
+  "lr": 0.0001,
+  "best_step": 175,
+  "initial": {
+    "synthetic": {
+      "loss": 1.2426,
+      "mean_iou": 0.4614
+    },
+    "real_review": {
+      "loss": 0.1173,
+      "mean_iou": 0.9327
+    }
+  },
+  "best_validation": {
+    "synthetic": {
+      "loss": 0.5853,
+      "mean_iou": 0.7148
+    },
+    "real_review": {
+      "loss": 0.1015,
+      "mean_iou": 0.9688
+    }
+  },
+  "onnx_max_absolute_error": 0.00010907649993896484,
+  "training_seconds": 345.2,
+  "input": "5 float32 NCHW channels: RGB [0,1], box fill, center Gaussian",
+  "output": "one outer-rim mask logit"
+}

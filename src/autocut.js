@@ -1,4 +1,6 @@
 // Pure orchestration around OpenCV; shared by the worker and regression tests.
+import { adaptiveMask } from "./adaptive-background.js";
+import { splitTouchingComponent } from "./touching-split.js";
 export const DEFAULTS = Object.freeze({
   mode: "auto",
   saturation: 35,
@@ -6,14 +8,14 @@ export const DEFAULTS = Object.freeze({
   alpha: 128,
   background: "#ffffff",
   tolerance: 35,
-  minArea: 0.03,
+  minArea: 0.15,
   join: 1.1,
   keepSmall: false,
   smallArea: 2,
   border: 0.6,
   bridge: 1.1,
   smooth: 0.4,
-  gap: 0.35,
+  gap: 0.1,
   detail: 0.06,
 });
 export function parameters(input = {}) {
@@ -36,7 +38,7 @@ export function parameters(input = {}) {
       throw Error(`Invalid ${key} parameter.`);
   }
   if (
-    !["auto", "alpha", "white", "color"].includes(p.mode) ||
+    !["auto", "alpha", "white", "color", "adaptive"].includes(p.mode) ||
     !/^#[a-f\d]{6}$/i.test(p.background)
   )
     throw Error("Invalid background settings.");
@@ -53,6 +55,7 @@ export function maskPixels(rgba, p) {
         ? "alpha"
         : "white"
       : p.mode;
+  if (mode === "adaptive") throw Error("Adaptive detection needs image dimensions.");
   const bg = [1, 3, 5].map((i) => parseInt(p.background.slice(i, i + 2), 16));
   for (let i = 0; i < result.length; i++) {
     const a = rgba[i * 4 + 3];
@@ -69,6 +72,30 @@ export function maskPixels(rgba, p) {
         : 0;
   }
   return { mask: result, mode };
+}
+function automaticMode(rgba, width, height, contentRect, alpha) {
+  const [x0, y0, cw, ch] = contentRect || [0, 0, width, height];
+  if (![x0, y0, cw, ch].every(Number.isInteger) || x0 < 0 || y0 < 0 ||
+      cw < 1 || ch < 1 || x0 + cw > width || y0 + ch > height)
+    throw Error("Invalid image content area.");
+  let transparent = 0;
+  for (let y = y0; y < y0 + ch; y++) for (let x = x0; x < x0 + cw; x++)
+    if (rgba[(y * width + x) * 4 + 3] < alpha) transparent++;
+  if (transparent > cw * ch * 0.005) return "alpha";
+  let samples = 0, white = 0;
+  const sample = (x, y) => {
+    const i = (y * width + x) * 4;
+    samples++;
+    if (rgba[i] >= 245 && rgba[i + 1] >= 245 && rgba[i + 2] >= 245) white++;
+  };
+  const step = Math.max(1, Math.floor((cw + ch) / 500));
+  for (let x = x0; x < x0 + cw; x += step) {
+    sample(x, y0); sample(x, y0 + ch - 1);
+  }
+  for (let y = y0; y < y0 + ch; y += step) {
+    sample(x0, y); sample(x0 + cw - 1, y);
+  }
+  return white / samples >= 0.9 ? "white" : "adaptive";
 }
 export function groupKey(ids) {
   return [...ids].sort((a, b) => a - b).join(",");
@@ -221,22 +248,13 @@ export function analyze(cv, request, progress = () => {}) {
     if (!components) {
       if (request.rgba?.length !== w * h * 4)
         throw Error("Invalid image data.");
-      let detection = p;
-      if (p.mode === "auto" && request.contentRect) {
-        const [x, y, cw, ch] = request.contentRect;
-        let transparent = 0;
-        for (let row = y; row < y + ch; row++)
-          for (let col = x; col < x + cw; col++)
-            if (request.rgba[(row * w + col) * 4 + 3] < p.alpha) transparent++;
-        detection = {
-          ...p,
-          mode: transparent > cw * ch * 0.005 ? "alpha" : "white",
-        };
-      }
-      const detected = maskPixels(request.rgba, detection);
-      mode = detected.mode;
+      mode = p.mode === "auto"
+        ? automaticMode(request.rgba, w, h, request.contentRect, p.alpha)
+        : p.mode;
       const ink = empty();
-      ink.data.set(detected.mask);
+      ink.data.set(mode === "adaptive"
+        ? adaptiveMask(cv, request.rgba, w, h, request.contentRect, p.alpha)
+        : maskPixels(request.rgba, { ...p, mode }).mask);
       const labels = own(new cv.Mat()),
         stats = own(new cv.Mat()),
         centers = own(new cv.Mat());
@@ -330,6 +348,73 @@ export function analyze(cv, request, progress = () => {}) {
           groups[assignments[i].best].componentIds.push(c.id),
         );
         groups = groups.filter((g) => g.componentIds.length);
+      } else if (mode === "adaptive") {
+        // Tiny background glints must not form transitive bridges between
+        // stickers. Use substantial components as independent anchors, then
+        // attach each smaller piece to at most one nearby anchor.
+        const anchorArea = Math.max(p.smallArea, p.minArea) * mm * mm,
+          anchors = components.filter((c) => c.area >= anchorArea);
+        if (!anchors.length) anchors.push(components.reduce((a, b) => a.area > b.area ? a : b));
+        const anchorIds = new Set(anchors.map((c) => c.id)),
+          host = new Map(anchors.map((c) => [c.id, c.id])),
+          nearby = new Map(), joinPixels = p.join * mm;
+        for (const anchor of anchors) {
+          const [x0, y0, rw, rh] = anchor.bounds,
+            shape = cv.Mat.zeros(rh, rw, cv.CV_8UC1),
+            found = new cv.MatVector(), hierarchy = new cv.Mat();
+          try {
+            for (const [start, length] of anchor.runs)
+              for (let at = start; at < start + length; at++) {
+                const x = at % w, y = (at - x) / w;
+                shape.data[(y - y0) * rw + x - x0] = 255;
+              }
+            cv.findContours(shape, found, hierarchy, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+            for (const piece of components) {
+              if (piece.id === anchor.id ||
+                  (piece.area >= anchorArea && piece.area >= anchor.area)) continue;
+              const [x, y] = piece.center;
+              if (x < x0 - joinPixels || x > x0 + rw + joinPixels ||
+                  y < y0 - joinPixels || y > y0 + rh + joinPixels) continue;
+              let signedDistance = -Infinity;
+              for (let i = 0; i < found.size(); i++) {
+                const path = found.get(i);
+                try {
+                  signedDistance = Math.max(signedDistance,
+                    cv.pointPolygonTest(path, new cv.Point(x - x0, y - y0), true));
+                } finally { path.delete(); }
+              }
+              if (piece.area >= anchorArea) {
+                if (signedDistance < 0) continue;
+                const prior = host.get(piece.id), previous = components.find((c) => c.id === prior);
+                if (prior === piece.id || anchor.area < previous.area) host.set(piece.id, anchor.id);
+              } else if (signedDistance >= -joinPixels) {
+                const prior = nearby.get(piece.id);
+                if (!prior || signedDistance > prior.distance)
+                  nearby.set(piece.id, { anchorId: anchor.id, distance: signedDistance });
+              }
+            }
+          } finally {
+            shape.delete(); found.delete(); hierarchy.delete();
+          }
+        }
+        const root = (id) => {
+          while (host.get(id) !== id) id = host.get(id);
+          return id;
+        };
+        const byAnchor = new Map();
+        for (const anchor of anchors) {
+          const id = root(anchor.id);
+          if (!byAnchor.has(id)) byAnchor.set(id, []);
+          byAnchor.get(id).push(anchor.id);
+        }
+        for (const piece of components.filter((c) => !anchorIds.has(c.id))) {
+          const match = nearby.get(piece.id);
+          if (p.keepSmall || !match) continue;
+          byAnchor.get(root(match.anchorId)).push(piece.id);
+        }
+        groups = [...byAnchor.values()].map((componentIds) => ({ componentIds }));
+        if (p.keepSmall) groups.push(...components.filter((c) => !anchorIds.has(c.id))
+          .map((c) => ({ componentIds: [c.id] })));
       } else {
         const joinMask = empty();
         for (const c of components)
@@ -350,6 +435,14 @@ export function analyze(cv, request, progress = () => {}) {
         groups = [...sets.values()].map((componentIds) => ({ componentIds }));
       }
     }
+    if (request.splitTouching) {
+      progress("Separating touching stickers");
+      ({ components, groups } = splitTouchingComponent(
+        cv, w, h, components, groups,
+        request.splitTouching.componentId, request.splitTouching.points,
+        Math.max(2, Math.ceil((p.gap * mm) / 2) + 4),
+      ));
+    }
     if (request.groupingOnly) return { groups, components };
     if (!groups?.length || groups.length > 250)
       throw Error(
@@ -369,22 +462,47 @@ export function analyze(cv, request, progress = () => {}) {
         for (const [s, n] of lookup.get(id).runs) art.data.fill(255, s, s + n);
       return art;
     };
+    const regionFor = (group) => {
+      const bounds = group.componentIds.map((id) => lookup.get(id).bounds),
+        seedPoints = (group.seedPaths || []).flat(),
+        padding = Math.ceil((p.border + p.bridge + p.smooth + 2) * mm) + 3;
+      const x0 = Math.max(0, Math.floor(Math.min(
+          ...bounds.map((b) => b[0]), ...seedPoints.map((pt) => pt[0]),
+        ) - padding)),
+        y0 = Math.max(0, Math.floor(Math.min(
+          ...bounds.map((b) => b[1]), ...seedPoints.map((pt) => pt[1]),
+        ) - padding)),
+        x1 = Math.min(w, Math.ceil(Math.max(
+          ...bounds.map((b) => b[0] + b[2]), ...seedPoints.map((pt) => pt[0]),
+        ) + padding)),
+        y1 = Math.min(h, Math.ceil(Math.max(
+          ...bounds.map((b) => b[1] + b[3]), ...seedPoints.map((pt) => pt[1]),
+        ) + padding));
+      return { x0, y0, rw: x1 - x0, rh: y1 - y0 };
+    };
+    const regions = groups.map(regionFor);
     progress("Separating neighboring stickers");
     const owner = new Int16Array(w * h).fill(-1),
       best = new Float32Array(w * h).fill(Infinity);
-    // Keep only one distance image, not a groups × pixels stack.
+    // A cut can only occupy its padded group region. Compute the nearest
+    // artwork there instead of transforming the entire sheet for every group.
     for (let g = 0; g < groups.length; g++) {
+      const { x0, y0, rw, rh } = regions[g];
       const art = artFor(groups[g]),
-        inv = empty(),
+        localArt = own(art.roi(new cv.Rect(x0, y0, rw, rh))),
+        inv = empty(rw, rh),
         dist = own(new cv.Mat());
-      cv.bitwise_not(art, inv);
+      cv.bitwise_not(localArt, inv);
       cv.distanceTransform(inv, dist, cv.DIST_L2, cv.DIST_MASK_PRECISE);
-      for (let i = 0; i < best.length; i++)
-        if (dist.data32F[i] < best[i]) {
-          best[i] = dist.data32F[i];
-          owner[i] = g;
+      for (let y = 0; y < rh; y++) for (let x = 0; x < rw; x++) {
+        const global = (y + y0) * w + x + x0,
+          local = y * rw + x;
+        if (dist.data32F[local] < best[global]) {
+          best[global] = dist.data32F[local];
+          owner[global] = g;
         }
-      for (const m of [art, inv, dist]) {
+      }
+      for (const m of [localArt, art, inv, dist]) {
         m.delete();
         mats.splice(mats.indexOf(m), 1);
       }
@@ -395,32 +513,8 @@ export function analyze(cv, request, progress = () => {}) {
       progress(`Refining outline ${g + 1} / ${groups.length}`);
       const startMats = mats.length,
         group = groups[g],
-        art = artFor(group);
-      const bounds = group.componentIds.map((id) => lookup.get(id).bounds),
-        seedPoints = (group.seedPaths || []).flat();
-      const padding = Math.ceil((p.border + p.bridge + p.smooth + 2) * mm) + 3;
-      let x0 = Math.min(
-          ...bounds.map((b) => b[0]),
-          ...seedPoints.map((p) => p[0]),
-        ),
-        y0 = Math.min(
-          ...bounds.map((b) => b[1]),
-          ...seedPoints.map((p) => p[1]),
-        );
-      let x1 = Math.max(
-          ...bounds.map((b) => b[0] + b[2]),
-          ...seedPoints.map((p) => p[0]),
-        ),
-        y1 = Math.max(
-          ...bounds.map((b) => b[1] + b[3]),
-          ...seedPoints.map((p) => p[1]),
-        );
-      x0 = Math.max(0, Math.floor(x0 - padding));
-      y0 = Math.max(0, Math.floor(y0 - padding));
-      x1 = Math.min(w, Math.ceil(x1 + padding));
-      y1 = Math.min(h, Math.ceil(y1 + padding));
-      const rw = x1 - x0,
-        rh = y1 - y0,
+        art = artFor(group),
+        { x0, y0, rw, rh } = regions[g],
         localArt = own(art.roi(new cv.Rect(x0, y0, rw, rh))),
         shape = dilate(localArt, Math.round(p.border * mm));
       if (group.seedPaths?.length)
@@ -452,7 +546,7 @@ export function analyze(cv, request, progress = () => {}) {
         for (let x = 0; x < rw; x++)
           allowed.data[y * rw + x] =
             owner[(y + y0) * w + x + x0] === g ? 255 : 0;
-      const gapRadius = Math.ceil((p.gap * mm) / 2);
+      const gapRadius = Math.round((p.gap * mm) / 2);
       if (gapRadius) cv.erode(allowed, allowed, kernel(gapRadius));
       cv.bitwise_and(shape, allowed, shape);
       const extract = (epsilon) =>
@@ -462,12 +556,23 @@ export function analyze(cv, request, progress = () => {}) {
       let paths = group.override || extract(p.detail * mm),
         solid = empty();
       fill(paths, solid);
+      const nearSplitLine = (pixel, component) => {
+        if (!component.splitLines?.length) return false;
+        const x = pixel % w, y = (pixel - x) / w;
+        return component.splitLines.some(({ points: [[ax, ay], [bx, by]], radius }) => {
+          const dx = bx - ax, dy = by - ay,
+            t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy)));
+          return (x - ax - t * dx) ** 2 + (y - ay - t * dy) ** 2 <= radius * radius;
+        });
+      };
       const missing = () => {
         let n = 0;
-        for (const [s, len] of group.componentIds.flatMap(
-          (id) => lookup.get(id).runs,
-        ))
-          for (let i = s; i < s + len; i++) if (!solid.data[i]) n++;
+        for (const id of group.componentIds) {
+          const component = lookup.get(id);
+          for (const [s, len] of component.runs)
+            for (let i = s; i < s + len; i++)
+              if (!solid.data[i] && !nearSplitLine(i, component)) n++;
+        }
         return n;
       };
       let clipped = missing();

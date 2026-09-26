@@ -1,4 +1,4 @@
-import { Canvas, FabricImage, Polygon, controlsUtils } from "fabric";
+import { Canvas, Circle, FabricImage, Polygon, controlsUtils } from "fabric";
 import {
   DEFAULTS,
   mergeGroups,
@@ -6,6 +6,7 @@ import {
   moveComponents,
 } from "./autocut.js";
 import { runAnalysis, cancelAnalysis } from "./autocut-client.js";
+import { analysisRaster } from "./analysis-raster.js";
 import {
   validateLayout,
   validateSpacing,
@@ -32,6 +33,7 @@ export function installCutEditor({ selected, changed, notice }) {
     working = false,
     opening = false,
     editing = false,
+    splitting = null,
     history = [],
     future = [],
     chosen = [0],
@@ -76,6 +78,7 @@ export function installCutEditor({ selected, changed, notice }) {
     for (const id of [
       "ac-merge",
       "ac-split",
+      "ac-split-touching",
       "ac-assign",
       "ac-exclude",
       "ac-restore",
@@ -92,6 +95,11 @@ export function installCutEditor({ selected, changed, notice }) {
     $("ac-edit").textContent = editing
       ? "Stop editing points"
       : "Edit outline points";
+    $("ac-split-touching").textContent = splitting
+      ? "Cancel separator line"
+      : "Split touching stickers with a line";
+    if (splitting) for (const el of dialog.querySelectorAll("button,input,select"))
+      if (!['ac-split-touching', 'ac-close'].includes(el.id)) el.disabled = true;
   }
   function options(id, items, selection = []) {
     $(id).replaceChildren(
@@ -193,6 +201,11 @@ export function installCutEditor({ selected, changed, notice }) {
         if (editable) view.setActiveObject(poly);
       }),
     );
+    for (const [x, y] of splitting?.points || []) view.add(new Circle({
+      left: x, top: y, radius: 5, originX: "center", originY: "center",
+      fill: "#ba5625", stroke: "white", strokeWidth: 2,
+      selectable: false, evented: false,
+    }));
     view.renderAll();
     state();
     const included = new Set(groups.flatMap((g) => g.componentIds)),
@@ -201,12 +214,13 @@ export function installCutEditor({ selected, changed, notice }) {
       `${components.length} artwork pieces → ${groups.length} groups / ${groups.reduce((n, g) => n + g.paths.length, 0)} outlines · ${draft.analysis.mode} detection${excluded ? ` · ${excluded} excluded (still printed)` : ""}`;
     $("ac-issues").textContent = issues?.length
       ? issues.join("\n")
-      : "No detected artwork is clipped. Review the grouping and fine details before applying.";
+      : "No detected artwork is clipped. Review touching stickers and fine details before applying.";
   }
   async function process({
     detect = false,
     seeds = false,
     groups,
+    splitTouching,
     save = true,
   } = {}) {
     if (working) return;
@@ -214,6 +228,7 @@ export function installCutEditor({ selected, changed, notice }) {
     working = true;
     state();
     message("Loading local image analysis…");
+    $("ac-summary").textContent = "Loading local image analysis…";
     try {
       const request = {
         width: draft.width,
@@ -234,18 +249,24 @@ export function installCutEditor({ selected, changed, notice }) {
         request.components = draft.analysis.components;
         request.mode = draft.analysis.mode;
         request.groups = groups || draft.analysis.groups;
+        if (splitTouching) request.splitTouching = splitTouching;
       }
-      const result = await runAnalysis(request, message);
+      const result = await runAnalysis(request, (step) => {
+        message(step);
+        $("ac-summary").textContent = `${step}…`;
+      });
       if (save) checkpoint();
       draft.analysis = result;
       writeParams(result.params);
       editing = false;
+      splitting = null;
       message(
         "Contours updated. Click the sheet to select a group; Shift-click selects several.",
       );
       return true;
     } catch (e) {
       message(e.message);
+      if (!draft.analysis) $("ac-summary").textContent = "Detection stopped";
       return false;
     } finally {
       working = false;
@@ -271,24 +292,19 @@ export function installCutEditor({ selected, changed, notice }) {
       chosen = [0];
       pathIndex = 0;
       editing = false;
-      const factor = Math.min(1, 1700 / Math.max(object.width, object.height)),
-        mm = (PX_PER_MM * factor) / object.scaleX,
-        pad = Math.ceil(mm * 12);
-      if (mm > 100) throw Error("Enlarge the artwork before analyzing it.");
+      splitting = null;
+      const rasterSpec = analysisRaster(object.width, object.height, object.scaleX),
+        { factor, pad, pxPerMM: mm } = rasterSpec;
       const raster = document.createElement("canvas");
-      raster.width = Math.round(object.width * factor) + 2 * pad;
-      raster.height = Math.round(object.height * factor) + 2 * pad;
-      if (raster.width * raster.height > 4_000_000)
-        throw Error(
-          "Analysis image is too large. Enlarge the artwork on the sheet or resize its source.",
-        );
+      raster.width = rasterSpec.width;
+      raster.height = rasterSpec.height;
       const ctx = raster.getContext("2d", { willReadFrequently: true });
       ctx.drawImage(
         object.getElement(),
         pad,
         pad,
-        Math.round(object.width * factor),
-        Math.round(object.height * factor),
+        rasterSpec.contentWidth,
+        rasterSpec.contentHeight,
       );
       draft = object.autoCut
         ? structuredClone(object.autoCut)
@@ -357,6 +373,18 @@ export function installCutEditor({ selected, changed, notice }) {
           y = Math.round(event.scenePoint.y),
           at = y * draft.width + x;
         if (x < 0 || x >= draft.width || y < 0 || y >= draft.height) return;
+        if (splitting) {
+          splitting.points.push([x, y]);
+          if (splitting.points.length === 1) {
+            message("First end marked. Click the other end of the shared white border.");
+            render();
+          } else {
+            const splitTouching = splitting;
+            splitting = null;
+            process({ splitTouching });
+          }
+          return;
+        }
         const component = draft.analysis.components.find((c) =>
           c.runs.some(([s, n]) => at >= s && at < s + n),
         );
@@ -457,6 +485,7 @@ export function installCutEditor({ selected, changed, notice }) {
   $("ac-groups").onchange = () => {
     chosen = selectIds("ac-groups");
     editing = false;
+    splitting = null;
     render();
   };
   $("ac-path").onchange = () => {
@@ -478,6 +507,25 @@ export function installCutEditor({ selected, changed, notice }) {
     action(() =>
       process({ groups: splitGroup(draft.analysis.groups, chosen[0]) }),
     );
+  $("ac-split-touching").onclick = () => action(() => {
+    if (splitting) {
+      splitting = null;
+      message("Separator line cancelled.");
+      render();
+      return;
+    }
+    if (chosen.length !== 1) throw Error("Select one group to split.");
+    const group = draft.analysis.groups[chosen[0]];
+    if (group.override) throw Error("Reset the locked outline before splitting its group.");
+    const selectedComponent = selectIds("ac-components")[0],
+      componentId = selectedComponent ?? group.componentIds
+        .map((id) => draft.analysis.components.find((c) => c.id === id))
+        .sort((a, b) => b.area - a.area)[0].id;
+    editing = false;
+    splitting = { componentId, points: [] };
+    message("Click the two ends of the shared white border between the stickers.");
+    render();
+  });
   $("ac-assign").onclick = () =>
     action(() =>
       process({
@@ -566,6 +614,7 @@ export function installCutEditor({ selected, changed, notice }) {
     draft = history.pop();
     writeParams(draft.analysis?.params || DEFAULTS);
     editing = false;
+    splitting = null;
     render();
   };
   $("ac-redo").onclick = () => {
@@ -574,6 +623,7 @@ export function installCutEditor({ selected, changed, notice }) {
     draft = future.pop();
     writeParams(draft.analysis?.params || DEFAULTS);
     editing = false;
+    splitting = null;
     render();
   };
   $("ac-apply").onclick = async () => {

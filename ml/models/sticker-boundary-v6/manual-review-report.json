@@ -1,0 +1,57 @@
+{
+  "split": "test",
+  "threshold": 0.5,
+  "instance_selection": "predicted connected component overlapping the target label",
+  "stickers": [
+    "r3c1",
+    "r3c2",
+    "r3c3",
+    "r3c4"
+  ],
+  "models": {
+    "sticker-boundary-v3": {
+      "per_sticker": {
+        "r3c1": {
+          "foreground_iou": 0.9323,
+          "boundary_f1_within_5px": 0.9862
+        },
+        "r3c2": {
+          "foreground_iou": 0.9161,
+          "boundary_f1_within_5px": 0.8233
+        },
+        "r3c3": {
+          "foreground_iou": 0.9296,
+          "boundary_f1_within_5px": 0.8131
+        },
+        "r3c4": {
+          "foreground_iou": 0.9286,
+          "boundary_f1_within_5px": 0.8491
+        }
+      },
+      "mean_foreground_iou": 0.9266,
+      "mean_boundary_f1_within_5px": 0.8679
+    },
+    "sticker-boundary-v6": {
+      "per_sticker": {
+        "r3c1": {
+          "foreground_iou": 0.9339,
+          "boundary_f1_within_5px": 0.9895
+        },
+        "r3c2": {
+          "foreground_iou": 0.9207,
+          "boundary_f1_within_5px": 0.8322
+        },
+        "r3c3": {
+          "foreground_iou": 0.9341,
+          "boundary_f1_within_5px": 0.8254
+        },
+        "r3c4": {
+          "foreground_iou": 0.931,
+          "boundary_f1_within_5px": 0.859
+        }
+      },
+      "mean_foreground_iou": 0.9299,
+      "mean_boundary_f1_within_5px": 0.8765
+    }
+  }
+}

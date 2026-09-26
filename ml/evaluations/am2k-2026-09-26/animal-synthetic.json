@@ -1,0 +1,56 @@
+{
+  "source": "AM-2k",
+  "source_ids": [
+    "m_31eb2f85",
+    "m_3a8f8e25",
+    "m_3857a7ab",
+    "m_87912af0",
+    "m_26d8a754",
+    "m_1640e863",
+    "m_f45a6c1e",
+    "m_54c624ec",
+    "m_bc6f89fe",
+    "m_c072b455",
+    "m_22456ebf",
+    "m_17675d3d"
+  ],
+  "seed": 2026,
+  "models": {
+    "sticker-boundary-v6": {
+      "loss": 1.2292,
+      "foreground_iou": 0.9008,
+      "boundary_f1": {
+        "0.2": 0.4127,
+        "0.35": 0.4009,
+        "0.5": 0.3844
+      }
+    },
+    "sticker-boundary-v10-dis5k-distilled": {
+      "loss": 0.9298,
+      "foreground_iou": 0.9248,
+      "boundary_f1": {
+        "0.2": 0.5193,
+        "0.35": 0.5213,
+        "0.5": 0.5112
+      }
+    },
+    "sticker-boundary-v11-no-public-control": {
+      "loss": 1.1164,
+      "foreground_iou": 0.9104,
+      "boundary_f1": {
+        "0.2": 0.4553,
+        "0.35": 0.4519,
+        "0.5": 0.4381
+      }
+    },
+    "sticker-boundary-v12-am2k-distilled": {
+      "loss": 0.8884,
+      "foreground_iou": 0.9268,
+      "boundary_f1": {
+        "0.2": 0.5339,
+        "0.35": 0.5385,
+        "0.5": 0.5327
+      }
+    }
+  }
+}

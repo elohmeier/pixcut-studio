@@ -1,0 +1,130 @@
+{
+  "date": "2026-09-26",
+  "purpose": "Private AM-2k alpha-matte synthetic sticker experiment",
+  "dataset": {
+    "official_source": "https://github.com/JizhiziLi/GFM",
+    "partition": "AM-2k train/original and train/mask only",
+    "source_pairs": 120,
+    "training_pairs": 108,
+    "synthetic_validation_pairs": 12,
+    "selection_sha256": "209b55017b4f96e53a34a0faee975170daeb00b0d5dd6e6688ece44e41c99822",
+    "storage": "Private local cache, excluded from repository and published artifacts"
+  },
+  "model": {
+    "name": "sticker-boundary-v12-am2k-distilled",
+    "model_pt_sha256": "9f65dda7d2279179632af830323863f8cd3f87105d4901cbe1d555bb8a0f6b68",
+    "best_step": 180,
+    "training": "V6 plus 180 steps using 3 corrected portrait crops, 2 other real crops, 2 original sticker collages and 1 AM-2k collage per batch; frozen batch normalization and original-scene distillation weight 50"
+  },
+  "metrics": {
+    "synthetic_am2k_holdout": {
+      "sticker-boundary-v6": {
+        "loss": 1.2292,
+        "foreground_iou": 0.9008,
+        "boundary_f1": {
+          "0.2": 0.4127,
+          "0.35": 0.4009,
+          "0.5": 0.3844
+        }
+      },
+      "sticker-boundary-v10-dis5k-distilled": {
+        "loss": 0.9298,
+        "foreground_iou": 0.9248,
+        "boundary_f1": {
+          "0.2": 0.5193,
+          "0.35": 0.5213,
+          "0.5": 0.5112
+        }
+      },
+      "sticker-boundary-v11-no-public-control": {
+        "loss": 1.1164,
+        "foreground_iou": 0.9104,
+        "boundary_f1": {
+          "0.2": 0.4553,
+          "0.35": 0.4519,
+          "0.5": 0.4381
+        }
+      },
+      "sticker-boundary-v12-am2k-distilled": {
+        "loss": 0.8884,
+        "foreground_iou": 0.9268,
+        "boundary_f1": {
+          "0.2": 0.5339,
+          "0.35": 0.5385,
+          "0.5": 0.5327
+        }
+      }
+    },
+    "pastel_fairy_original": {
+      "intended_instances": 36,
+      "v11_no_public_control": {
+        "predicted_instances": 38,
+        "matched_instances": 36,
+        "mean_reviewed_iou": 0.9294,
+        "boundary_f1_within_5px": 0.9973,
+        "overlapping_path_pixels": 0
+      },
+      "v12_am2k": {
+        "predicted_instances": 39,
+        "matched_instances": 36,
+        "mean_reviewed_iou": 0.9301,
+        "boundary_f1_within_5px": 0.9972,
+        "overlapping_path_pixels": 0
+      }
+    },
+    "grandma_portraits": {
+      "intended_instances": 8,
+      "v11_no_public_control": {
+        "predicted_instances": 8,
+        "matched_instances": 8,
+        "mean_reviewed_iou": 0.9533,
+        "boundary_f1_within_5px": 0.8293
+      },
+      "v12_am2k": {
+        "predicted_instances": 8,
+        "matched_instances": 8,
+        "mean_reviewed_iou": 0.9532,
+        "boundary_f1_within_5px": 0.8274
+      }
+    },
+    "grandma_grid_row3": {
+      "v11_no_public_control": {
+        "mean_foreground_iou": 0.9314,
+        "boundary_f1_within_5px": 0.8781
+      },
+      "v12_am2k": {
+        "mean_foreground_iou": 0.932,
+        "boundary_f1_within_5px": 0.8862
+      }
+    },
+    "grandma_grid_row6": {
+      "v11_no_public_control": {
+        "mean_foreground_iou": 0.9212,
+        "boundary_f1_within_5px": 0.8935
+      },
+      "v12_am2k": {
+        "mean_foreground_iou": 0.9216,
+        "boundary_f1_within_5px": 0.8974
+      }
+    },
+    "pirate_icons_pseudo_labels_at_0_5": {
+      "v11_no_public_control": {
+        "foreground_iou": 0.9611,
+        "boundary_f1": 0.5737
+      },
+      "v12_am2k": {
+        "foreground_iou": 0.9608,
+        "boundary_f1": 0.5599
+      }
+    }
+  },
+  "postprocessing": "Same 0.5 foreground, 0.94 core threshold, 0.2 max core boundary, 9-pixel erosion, enclosed-island merge; min core area 500 pastel / 20000 grandma",
+  "interpretation": "AM-2k helps synthetic animal-sticker holdout. Real-sheet changes are small and mixed: a slight portrait contour gain but one more extra pastel path and worse pirate pseudo-label boundary F1 than the matched no-public control. Upper unicorn remains fragmented. References are development data with uncertain seams; no browser adoption.",
+  "matched_control_verification": {
+    "name": "sticker-boundary-v13-am2k-no-public-control",
+    "best_step": 125,
+    "training": "Same seed, 180 steps, optimizer, original-sticker mix and regularization as V12; AM-2k holdout used for checkpoint selection, with no AM-2k training tiles",
+    "model_pt_sha256": "cd6730468d31c1b2c180fd8f72c181868936843713e054ef95ff928ecaff828d",
+    "same_weights_as_v11": true
+  }
+}

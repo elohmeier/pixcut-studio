@@ -1,0 +1,135 @@
+{
+  "input": "../../sheets/baby-bear.jpeg",
+  "objectScale": 1.139240506329114,
+  "raster": {
+    "factor": 1,
+    "pad": 125,
+    "pxPerMM": 10.36745406824147,
+    "width": 1198,
+    "height": 1909,
+    "contentWidth": 948,
+    "contentHeight": 1659,
+    "contentRect": [
+      125,
+      125,
+      948,
+      1659
+    ]
+  },
+  "mode": "white",
+  "seconds": 1.362,
+  "components": 19,
+  "excludedComponentIds": [],
+  "groups": [
+    {
+      "number": 1,
+      "componentIds": [
+        1
+      ],
+      "outlines": 1,
+      "vertices": [
+        255
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 2,
+      "componentIds": [
+        2,
+        5,
+        6
+      ],
+      "outlines": 1,
+      "vertices": [
+        244
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 3,
+      "componentIds": [
+        8,
+        16,
+        21
+      ],
+      "outlines": 1,
+      "vertices": [
+        230
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 4,
+      "componentIds": [
+        9
+      ],
+      "outlines": 1,
+      "vertices": [
+        130
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 5,
+      "componentIds": [
+        10
+      ],
+      "outlines": 1,
+      "vertices": [
+        258
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 6,
+      "componentIds": [
+        45
+      ],
+      "outlines": 1,
+      "vertices": [
+        241
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 7,
+      "componentIds": [
+        46,
+        56,
+        57,
+        69,
+        70
+      ],
+      "outlines": 1,
+      "vertices": [
+        191
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 8,
+      "componentIds": [
+        47,
+        59,
+        61
+      ],
+      "outlines": 1,
+      "vertices": [
+        184
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 9,
+      "componentIds": [
+        52
+      ],
+      "outlines": 1,
+      "vertices": [
+        12
+      ],
+      "clippedPixels": 0
+    }
+  ],
+  "issues": []
+}

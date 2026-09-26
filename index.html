@@ -47,13 +47,13 @@
       <section class="cut-settings">
         <details open><summary>1 · Detect artwork</summary>
           <label>Starting preset<select id="ac-preset"><option value="detailed">Detailed collage</option><option value="rounded">Larger, rounded motifs</option><option value="separate">Keep small decorations separate</option></select></label>
-          <label>Background mode<select id="ac-mode"><option value="auto">Auto: alpha or white background</option><option value="alpha">Transparency only</option><option value="white">White background (Python-style)</option><option value="color">Background color</option></select></label>
+          <label>Background mode<select id="ac-mode"><option value="auto">Auto: alpha, white, or smooth color</option><option value="alpha">Transparency only</option><option value="white">White background (Python-style)</option><option value="adaptive">Adaptive color background</option><option value="color">Background color</option></select></label>
           <label>Background color<input id="ac-background" type="color" value="#ffffff"></label>
           <label>Color distance<input id="ac-tolerance" type="number" min="1" max="255" value="35"></label>
           <label>Saturation threshold ↓ detects faint color<input id="ac-saturation" type="number" min="0" max="255" value="35"></label>
           <label>Darkness threshold ↑ detects pale gray<input id="ac-darkness" type="number" min="0" max="255" value="175"></label>
           <label>Alpha threshold<input id="ac-alpha" type="number" min="1" max="255" value="128"></label>
-          <label>Minimum feature area (mm²)<input id="ac-minArea" type="number" min="0" max="10" step="0.01" value="0.03"></label>
+          <label>Minimum feature area (mm²)<input id="ac-minArea" type="number" min="0" max="10" step="0.01" value="0.15"></label>
           <label>Join distance (mm)<input id="ac-join" type="number" min="0" max="5" step="0.1" value="1.1"></label>
           <label><input id="ac-keepSmall" type="checkbox"> Keep small decorations separate</label>
           <label>Small decoration area (mm²)<input id="ac-smallArea" type="number" min="0" max="50" step="0.1" value="2"></label>
@@ -63,7 +63,7 @@
           <label>White border (mm)<input id="ac-border" type="number" min="0" max="5" step="0.1" value="0.6"></label>
           <label>Bridge small gaps (mm)<input id="ac-bridge" type="number" min="0" max="5" step="0.1" value="1.1"></label>
           <label>Smoothing radius (mm)<input id="ac-smooth" type="number" min="0" max="3" step="0.1" value="0.4"></label>
-          <label>Minimum cut spacing (mm)<input id="ac-gap" type="number" min="0" max="3" step="0.05" value="0.35"></label>
+          <label>Minimum cut spacing (mm)<input id="ac-gap" type="number" min="0" max="3" step="0.05" value="0.1"></label>
           <label>Simplification tolerance (mm)<input id="ac-detail" type="number" min="0" max="1" step="0.01" value="0.06"></label>
           <button id="ac-update" class="wide">Update contours · keep locked edits</button>
         </details>
@@ -71,7 +71,7 @@
       <section class="cut-preview"><div id="ac-stage"><canvas id="cut-canvas"></canvas></div><p class="hint">Click artwork to select its group. Shift-click to select more. Blank white areas inside a cut also select it.</p><pre id="ac-issues" role="status"></pre></section>
       <section class="cut-settings">
         <h3>3 · Correct grouping</h3><label>Groups · ⌘/Ctrl-click for multiple<select id="ac-groups" multiple size="7"></select></label>
-        <button id="ac-merge" class="wide">Merge selected groups</button><button id="ac-split" class="wide">Split group into connected pieces</button>
+        <button id="ac-merge" class="wide">Merge selected groups</button><button id="ac-split" class="wide">Split group into connected pieces</button><button id="ac-split-touching" class="wide">Split touching stickers with a line</button><p class="hint">When two stickers share a white rim, select their group, then click the two ends of that shared border. Place the line through white artwork only.</p>
         <label>Pieces in the first selected group<select id="ac-components" multiple size="5"></select></label><label>Assign selected pieces to<select id="ac-destination"></select></label><button id="ac-assign" class="wide">Move pieces to group</button><button id="ac-exclude" class="wide">Exclude pieces from cuts</button><button id="ac-restore" class="wide">Restore excluded pieces</button>
         <hr><h3>4 · Edit an outline</h3><label>Outline<select id="ac-path"></select></label><button id="ac-edit" class="wide">Edit outline points</button>
         <label>Vertex<select id="ac-point"></select></label><div class="button-row"><button id="ac-insert">Insert after</button><button id="ac-remove">Delete point</button></div>

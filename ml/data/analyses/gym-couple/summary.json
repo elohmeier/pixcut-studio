@@ -1,0 +1,98 @@
+{
+  "input": "../../sheets/gym-couple.jpeg",
+  "objectScale": 1.139240506329114,
+  "raster": {
+    "factor": 1,
+    "pad": 125,
+    "pxPerMM": 10.36745406824147,
+    "width": 1198,
+    "height": 1909,
+    "contentWidth": 948,
+    "contentHeight": 1659,
+    "contentRect": [
+      125,
+      125,
+      948,
+      1659
+    ]
+  },
+  "mode": "white",
+  "seconds": 1.331,
+  "components": 12,
+  "excludedComponentIds": [],
+  "groups": [
+    {
+      "number": 1,
+      "componentIds": [
+        1
+      ],
+      "outlines": 1,
+      "vertices": [
+        252
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 2,
+      "componentIds": [
+        3,
+        8,
+        9,
+        11
+      ],
+      "outlines": 1,
+      "vertices": [
+        164
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 3,
+      "componentIds": [
+        20
+      ],
+      "outlines": 1,
+      "vertices": [
+        185
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 4,
+      "componentIds": [
+        22
+      ],
+      "outlines": 1,
+      "vertices": [
+        168
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 5,
+      "componentIds": [
+        26,
+        28,
+        34
+      ],
+      "outlines": 1,
+      "vertices": [
+        292
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 6,
+      "componentIds": [
+        29,
+        53
+      ],
+      "outlines": 1,
+      "vertices": [
+        168
+      ],
+      "clippedPixels": 0
+    }
+  ],
+  "issues": []
+}

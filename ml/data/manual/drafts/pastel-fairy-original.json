@@ -1,0 +1,499 @@
+{
+  "image": "pastel-fairy-original",
+  "image_size": [
+    948,
+    1659
+  ],
+  "trace_defaults": {
+    "polarity": "light",
+    "threshold": 245,
+    "close_px": 3,
+    "simplify_px": 1.0
+  },
+  "split_policy": "The entire original pastel sheet is excluded from model training and threshold tuning.",
+  "annotations": [
+    {
+      "id": "fairy-top",
+      "box": [
+        0,
+        0,
+        645,
+        808
+      ],
+      "seed": [
+        314,
+        371
+      ],
+      "quality": "needs-review"
+    },
+    {
+      "id": "heart-top-left",
+      "box": [
+        20,
+        8,
+        119,
+        103
+      ],
+      "seed": [
+        70,
+        50
+      ],
+      "quality": "nested-or-touching"
+    },
+    {
+      "id": "star-top-left",
+      "box": [
+        119,
+        10,
+        196,
+        106
+      ],
+      "seed": [
+        158,
+        61
+      ]
+    },
+    {
+      "id": "sparkle-top",
+      "box": [
+        430,
+        26,
+        500,
+        112
+      ],
+      "seed": [
+        461,
+        70
+      ]
+    },
+    {
+      "id": "snowflake-top",
+      "box": [
+        493,
+        2,
+        641,
+        163
+      ],
+      "seed": [
+        568,
+        83
+      ]
+    },
+    {
+      "id": "unicorn-top",
+      "box": [
+        625,
+        2,
+        948,
+        550
+      ],
+      "seed": [
+        756,
+        307
+      ],
+      "quality": "needs-review"
+    },
+    {
+      "id": "heart-top-right",
+      "box": [
+        808,
+        8,
+        945,
+        142
+      ],
+      "seed": [
+        871,
+        70
+      ]
+    },
+    {
+      "id": "star-top-right",
+      "box": [
+        872,
+        139,
+        948,
+        227
+      ],
+      "seed": [
+        906,
+        183
+      ],
+      "quality": "nested-or-touching"
+    },
+    {
+      "id": "star-blue-upper",
+      "box": [
+        558,
+        380,
+        666,
+        499
+      ],
+      "seed": [
+        613,
+        442
+      ]
+    },
+    {
+      "id": "star-gold-upper",
+      "box": [
+        489,
+        465,
+        646,
+        614
+      ],
+      "seed": [
+        567,
+        542
+      ]
+    },
+    {
+      "id": "gem-purple-upper",
+      "box": [
+        630,
+        515,
+        738,
+        647
+      ],
+      "seed": [
+        683,
+        577
+      ]
+    },
+    {
+      "id": "snowflake-upper-right",
+      "box": [
+        742,
+        552,
+        934,
+        756
+      ],
+      "seed": [
+        841,
+        648
+      ]
+    },
+    {
+      "id": "heart-rainbow",
+      "box": [
+        463,
+        595,
+        600,
+        722
+      ],
+      "seed": [
+        533,
+        662
+      ]
+    },
+    {
+      "id": "sparkle-left-upper",
+      "box": [
+        4,
+        552,
+        80,
+        646
+      ],
+      "seed": [
+        43,
+        601
+      ]
+    },
+    {
+      "id": "star-blue-left",
+      "box": [
+        177,
+        652,
+        260,
+        752
+      ],
+      "seed": [
+        220,
+        700
+      ]
+    },
+    {
+      "id": "bow-purple",
+      "box": [
+        269,
+        655,
+        453,
+        817
+      ],
+      "seed": [
+        360,
+        737
+      ],
+      "quality": "nested-or-touching"
+    },
+    {
+      "id": "gem-purple-center",
+      "box": [
+        441,
+        713,
+        528,
+        831
+      ],
+      "seed": [
+        481,
+        769
+      ]
+    },
+    {
+      "id": "unicorn-lower",
+      "box": [
+        0,
+        746,
+        347,
+        1209
+      ],
+      "seed": [
+        190,
+        984
+      ],
+      "quality": "needs-review"
+    },
+    {
+      "id": "gem-blue-left",
+      "box": [
+        4,
+        821,
+        93,
+        952
+      ],
+      "seed": [
+        46,
+        884
+      ],
+      "quality": "nested-or-touching"
+    },
+    {
+      "id": "magic-swirl",
+      "box": [
+        330,
+        801,
+        497,
+        1018
+      ],
+      "seed": [
+        403,
+        895
+      ],
+      "quality": "needs-review"
+    },
+    {
+      "id": "gem-gold-center",
+      "box": [
+        338,
+        953,
+        441,
+        1089
+      ],
+      "seed": [
+        389,
+        1022
+      ]
+    },
+    {
+      "id": "heart-pink-middle",
+      "box": [
+        317,
+        1083,
+        463,
+        1218
+      ],
+      "seed": [
+        393,
+        1148
+      ]
+    },
+    {
+      "id": "gem-purple-lower",
+      "box": [
+        4,
+        1168,
+        100,
+        1294
+      ],
+      "seed": [
+        52,
+        1230
+      ]
+    },
+    {
+      "id": "star-gold-lower",
+      "box": [
+        88,
+        1193,
+        181,
+        1306
+      ],
+      "seed": [
+        135,
+        1252
+      ]
+    },
+    {
+      "id": "snowflake-lower-left",
+      "box": [
+        175,
+        1153,
+        359,
+        1345
+      ],
+      "seed": [
+        264,
+        1248
+      ]
+    },
+    {
+      "id": "rainbow-bottom-left",
+      "box": [
+        0,
+        1274,
+        285,
+        1492
+      ],
+      "seed": [
+        132,
+        1375
+      ],
+      "quality": "needs-review"
+    },
+    {
+      "id": "sparkle-bottom-left",
+      "box": [
+        98,
+        1452,
+        190,
+        1557
+      ],
+      "seed": [
+        143,
+        1503
+      ]
+    },
+    {
+      "id": "shooting-star-bottom",
+      "box": [
+        96,
+        1448,
+        322,
+        1657
+      ],
+      "seed": [
+        206,
+        1579
+      ],
+      "quality": "needs-review"
+    },
+    {
+      "id": "heart-bottom-left",
+      "box": [
+        3,
+        1508,
+        131,
+        1658
+      ],
+      "seed": [
+        69,
+        1582
+      ]
+    },
+    {
+      "id": "star-blue-bottom",
+      "box": [
+        300,
+        1495,
+        421,
+        1645
+      ],
+      "seed": [
+        364,
+        1570
+      ]
+    },
+    {
+      "id": "heart-bottom-center",
+      "box": [
+        415,
+        1537,
+        522,
+        1654
+      ],
+      "seed": [
+        466,
+        1595
+      ]
+    },
+    {
+      "id": "heart-bottom-right",
+      "box": [
+        842,
+        1542,
+        948,
+        1659
+      ],
+      "seed": [
+        899,
+        1606
+      ],
+      "quality": "nested-or-touching"
+    },
+    {
+      "id": "princess-ice",
+      "box": [
+        281,
+        635,
+        948,
+        1607
+      ],
+      "seed": [
+        694,
+        1294
+      ],
+      "quality": "needs-review",
+      "note": "Held snowflake staff belongs to the princess; nearby star and sparkle have ambiguous white seams."
+    },
+    {
+      "id": "star-blue-right",
+      "box": [
+        796,
+        771,
+        913,
+        899
+      ],
+      "seed": [
+        857,
+        833
+      ],
+      "quality": "nested-or-touching"
+    },
+    {
+      "id": "sparkle-right-middle",
+      "box": [
+        856,
+        731,
+        939,
+        821
+      ],
+      "seed": [
+        900,
+        775
+      ],
+      "quality": "nested-or-touching"
+    },
+    {
+      "id": "sparkle-right-lower",
+      "box": [
+        872,
+        1086,
+        948,
+        1199
+      ],
+      "seed": [
+        909,
+        1144
+      ]
+    }
+  ]
+}

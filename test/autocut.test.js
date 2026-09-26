@@ -12,6 +12,7 @@ import {
 } from "../src/autocut.js";
 import { validateAnalysisData } from "../src/project.js";
 import { validateSimplePath, validateSpacing } from "../src/geometry.js";
+import { adaptiveMask } from "../src/adaptive-background.js";
 import { Polygon, controlsUtils, Point } from "fabric";
 test("Fabric vertex controls preserve the other vertices under rotation and scale", () => {
   const poly = new Polygon(
@@ -209,4 +210,75 @@ test("automatic mode ignores transparent analysis padding on opaque white artwor
   });
   assert.equal(a.mode, "white");
   assert.equal(a.groups.length, 3);
+});
+test("automatic detection follows white rims on a changing pastel background", () => {
+  const width = 140, height = 110,
+    rgba = new Uint8Array(width * height * 4);
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+    const i = (y * width + x) * 4;
+    rgba.set([
+      Math.round(215 + x * 0.2 + y * 0.06),
+      Math.round(222 + x * 0.04 + y * 0.19),
+      Math.round(245 - x * 0.08 - y * 0.05), 255,
+    ], i);
+    for (const [x0, y0, x1, y1] of [[18, 18, 58, 77], [82, 24, 123, 88]])
+      if (x >= x0 && x <= x1 && y >= y0 && y <= y1)
+        rgba.set(x >= x0 + 4 && x <= x1 - 4 && y >= y0 + 4 && y <= y1 - 4
+          ? [246, 232, 247, 255] : [255, 255, 255, 255], i);
+  }
+  const mask = adaptiveMask(cv, rgba, width, height, null, 128);
+  assert.equal(mask[20 * width + 18], 255);
+  assert.equal(mask[0], 0);
+  const a = analyze(cv, {
+    width, height, rgba, pxPerMM: 5,
+    params: { ...DEFAULTS, join: 0, gap: 0.2 },
+  });
+  assert.equal(a.mode, "adaptive");
+  assert.equal(a.groups.length, 2);
+  assert.deepEqual(a.issues, []);
+  assert.equal(a.groups.reduce((n, g) => n + g.paths.length, 0), 2);
+});
+test("small background glints cannot chain two adaptive sticker groups", () => {
+  const width = 120, height = 70,
+    rgba = new Uint8Array(width * height * 4);
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+    const i = (y * width + x) * 4;
+    rgba.set([225 + Math.round(x / 12), 230 + Math.round(y / 8), 247, 255], i);
+    if ((x >= 10 && x < 38 || x >= 82 && x < 110) && y >= 15 && y < 56)
+      rgba.set([255, 255, 255, 255], i);
+    if (y >= 33 && y < 35 && x >= 42 && x < 80 && x % 4 < 2)
+      rgba.set([55, 70, 130, 255], i);
+  }
+  const a = analyze(cv, {
+    width, height, rgba, pxPerMM: 5,
+    params: { ...DEFAULTS, mode: "adaptive" }, groupingOnly: true,
+  });
+  assert.equal(a.groups.length, 2);
+  assert.ok(a.components.length > a.groups.flatMap((g) => g.componentIds).length);
+});
+test("a short line separates touching art and preserves project data", () => {
+  const width = 120, height = 100,
+    rgba = new Uint8Array(width * height * 4).fill(255);
+  for (let y = 20; y < 80; y++) for (let x = 15; x < 105; x++) {
+    if (x > 53 && x < 66 && (y < 45 || y > 54)) continue;
+    rgba.set([110, 30, 160, 255], (y * width + x) * 4);
+  }
+  const request = {
+    width, height, rgba, pxPerMM: 5,
+    params: { ...DEFAULTS, mode: "white", join: 0, border: 0.2, gap: 0.2 },
+  };
+  const initial = analyze(cv, request);
+  assert.equal(initial.groups.length, 1);
+  const split = analyze(cv, {
+    ...request, components: initial.components, groups: initial.groups,
+    splitTouching: { componentId: initial.components[0].id, points: [[59, 34], [59, 65]] },
+  });
+  assert.equal(split.groups.length, 2);
+  assert.deepEqual(split.issues, []);
+  assert.equal(split.groups.reduce((n, g) => n + g.paths.length, 0), 2);
+  validateAnalysisData({
+    analysis: split, width, height, factor: 1, pad: 0,
+    pxPerMM: 5, sourceWidth: width, sourceHeight: height,
+    scaleAtAnalysis: 1,
+  });
 });

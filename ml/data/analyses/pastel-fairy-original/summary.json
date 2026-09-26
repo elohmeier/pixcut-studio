@@ -1,0 +1,331 @@
+{
+  "input": "/var/home/gordon/repos/github.com/elohmeier/pixcut-studio/ml/data/sheets/pastel-fairy-original.jpeg",
+  "objectScale": 0.3616636528028933,
+  "raster": {
+    "factor": 0.9625637738194522,
+    "pad": 378,
+    "pxPerMM": 31.43490749540298,
+    "width": 1669,
+    "height": 2353,
+    "contentWidth": 913,
+    "contentHeight": 1597,
+    "contentRect": [
+      378,
+      378,
+      913,
+      1597
+    ]
+  },
+  "mode": "adaptive",
+  "seconds": 25.763,
+  "components": 41,
+  "excludedComponentIds": [
+    16,
+    1820
+  ],
+  "groups": [
+    {
+      "number": 1,
+      "componentIds": [
+        1
+      ],
+      "outlines": 1,
+      "vertices": [
+        24
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 2,
+      "componentIds": [
+        2
+      ],
+      "outlines": 1,
+      "vertices": [
+        121
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 3,
+      "componentIds": [
+        3,
+        69,
+        92,
+        199
+      ],
+      "outlines": 1,
+      "vertices": [
+        61
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 4,
+      "componentIds": [
+        4
+      ],
+      "outlines": 1,
+      "vertices": [
+        16
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 5,
+      "componentIds": [
+        7
+      ],
+      "outlines": 1,
+      "vertices": [
+        15
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 6,
+      "componentIds": [
+        232
+      ],
+      "outlines": 1,
+      "vertices": [
+        13
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 7,
+      "componentIds": [
+        295
+      ],
+      "outlines": 1,
+      "vertices": [
+        19
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 8,
+      "componentIds": [
+        353
+      ],
+      "outlines": 1,
+      "vertices": [
+        16
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 9,
+      "componentIds": [
+        396,
+        376
+      ],
+      "outlines": 1,
+      "vertices": [
+        34
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 10,
+      "componentIds": [
+        400
+      ],
+      "outlines": 1,
+      "vertices": [
+        12
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 11,
+      "componentIds": [
+        438
+      ],
+      "outlines": 1,
+      "vertices": [
+        18
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 12,
+      "componentIds": [
+        486,
+        1327,
+        685,
+        1000,
+        1006,
+        1021
+      ],
+      "outlines": 1,
+      "vertices": [
+        125
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 13,
+      "componentIds": [
+        515
+      ],
+      "outlines": 1,
+      "vertices": [
+        15
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 14,
+      "componentIds": [
+        540
+      ],
+      "outlines": 1,
+      "vertices": [
+        14
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 15,
+      "componentIds": [
+        547
+      ],
+      "outlines": 1,
+      "vertices": [
+        205
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 16,
+      "componentIds": [
+        550,
+        631,
+        758,
+        805
+      ],
+      "outlines": 1,
+      "vertices": [
+        51
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 17,
+      "componentIds": [
+        566
+      ],
+      "outlines": 1,
+      "vertices": [
+        277
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 18,
+      "componentIds": [
+        657
+      ],
+      "outlines": 1,
+      "vertices": [
+        15
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 19,
+      "componentIds": [
+        840
+      ],
+      "outlines": 1,
+      "vertices": [
+        245
+      ],
+      "clippedPixels": 1
+    },
+    {
+      "number": 20,
+      "componentIds": [
+        868
+      ],
+      "outlines": 1,
+      "vertices": [
+        16
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 21,
+      "componentIds": [
+        925
+      ],
+      "outlines": 1,
+      "vertices": [
+        501
+      ],
+      "clippedPixels": 2
+    },
+    {
+      "number": 22,
+      "componentIds": [
+        934
+      ],
+      "outlines": 1,
+      "vertices": [
+        13
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 23,
+      "componentIds": [
+        1575
+      ],
+      "outlines": 1,
+      "vertices": [
+        124
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 24,
+      "componentIds": [
+        1582,
+        1821
+      ],
+      "outlines": 1,
+      "vertices": [
+        38
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 25,
+      "componentIds": [
+        1709
+      ],
+      "outlines": 1,
+      "vertices": [
+        17
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 26,
+      "componentIds": [
+        1793
+      ],
+      "outlines": 1,
+      "vertices": [
+        15
+      ],
+      "clippedPixels": 0
+    }
+  ],
+  "issues": [
+    "Group 19: 1 detected artwork pixels outside its cut. Reduce spacing, merge groups, or edit the outline.",
+    "Group 21: 2 detected artwork pixels outside its cut. Reduce spacing, merge groups, or edit the outline."
+  ]
+}

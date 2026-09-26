@@ -1,0 +1,63 @@
+{
+  "reference": "/var/home/gordon/repos/github.com/elohmeier/pixcut-studio/ml/data/manual/grandma-portraits.json",
+  "predictions": "/tmp/pixcut-am2k-grandma-v12/instances.npz",
+  "reference_instances": 8,
+  "reviewed_contours": 2,
+  "predicted_instances": 8,
+  "matched_instances_iou_at_least_0_1": 8,
+  "predicted_overlap_px": 0,
+  "mean_reviewed_iou": 0.9532,
+  "mean_reviewed_boundary_f1_within_5px": 0.8274,
+  "per_instance": [
+    {
+      "id": "r1c1",
+      "quality": "reviewed",
+      "matched_prediction": "2",
+      "iou": 0.9564,
+      "boundary_f1_within_5px": 0.868
+    },
+    {
+      "id": "r1c2",
+      "quality": "reviewed",
+      "matched_prediction": "1",
+      "iou": 0.9499,
+      "boundary_f1_within_5px": 0.7869
+    },
+    {
+      "id": "r2c1",
+      "quality": "seam-uncertain",
+      "matched_prediction": "3",
+      "iou": 0.9332
+    },
+    {
+      "id": "r2c2",
+      "quality": "seam-uncertain",
+      "matched_prediction": "4",
+      "iou": 0.9157
+    },
+    {
+      "id": "r3c1",
+      "quality": "seam-uncertain",
+      "matched_prediction": "5",
+      "iou": 0.8826
+    },
+    {
+      "id": "r3c2",
+      "quality": "seam-uncertain",
+      "matched_prediction": "6",
+      "iou": 0.8305
+    },
+    {
+      "id": "r4c1",
+      "quality": "seam-uncertain",
+      "matched_prediction": "8",
+      "iou": 0.8969
+    },
+    {
+      "id": "r4c2",
+      "quality": "seam-uncertain",
+      "matched_prediction": "7",
+      "iou": 0.9248
+    }
+  ]
+}

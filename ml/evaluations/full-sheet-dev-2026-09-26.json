@@ -1,0 +1,90 @@
+{
+  "date": "2026-09-26",
+  "status": "exploratory development comparison",
+  "model": "sticker-boundary-v6",
+  "sam2": {
+    "repository_commit": "2b90b9f5ceec907a1c18123530e92e794ad901a4",
+    "variant": "sam2.1_hiera_tiny",
+    "prompt": "reference boxes (oracle)",
+    "checkpoint_sha256": "7402e0d864fa82708a20fbd15bc84245c2f26dff0eb43a4b5b93452deb34be69"
+  },
+  "sheets": {
+    "grandma-portraits": {
+      "reference_sha256": "50cab972f54327e3a7aee3d8cc2cdc787f9bbb68b6694e9d4e9316449f14962b",
+      "reference_instances": 8,
+      "quality_counts": {
+        "reviewed": 2,
+        "seam-uncertain": 6
+      },
+      "methods": {
+        "classical": {
+          "predicted_instances": 42,
+          "matched_instances_iou_at_least_0_1": 8,
+          "predicted_overlap_px": 0,
+          "mean_reviewed_iou": 0.6735,
+          "mean_reviewed_boundary_f1_within_5px": 0.0168
+        },
+        "boundary-split": {
+          "predicted_instances": 8,
+          "matched_instances_iou_at_least_0_1": 8,
+          "predicted_overlap_px": 0,
+          "mean_reviewed_iou": 0.9526,
+          "mean_reviewed_boundary_f1_within_5px": 0.8319
+        },
+        "sam2": {
+          "predicted_instances": 8,
+          "matched_instances_iou_at_least_0_1": 8,
+          "predicted_overlap_px": 101,
+          "mean_reviewed_iou": 0.9263,
+          "mean_reviewed_boundary_f1_within_5px": 0.5486
+        }
+      },
+      "image_sha256": "c70a835acb9588a1de6514e18441c88f6ee2b40cdeb779bd1703081a8fdfc977",
+      "reference_polygon_overlap_px": 33363
+    },
+    "pastel-fairy-original": {
+      "reference_sha256": "ef081ea64ee74b428264317ce5effb5ad1d8906cf80878360bbed20e4b7cc7c2",
+      "reference_instances": 36,
+      "quality_counts": {
+        "needs-review": 7,
+        "nested-or-touching": 7,
+        "reviewed": 21,
+        "box-clipped": 1
+      },
+      "methods": {
+        "classical": {
+          "predicted_instances": 26,
+          "matched_instances_iou_at_least_0_1": 26,
+          "predicted_overlap_px": 0,
+          "mean_reviewed_iou": 0.5259,
+          "mean_reviewed_boundary_f1_within_5px": 0.207
+        },
+        "boundary-split": {
+          "predicted_instances": 43,
+          "matched_instances_iou_at_least_0_1": 34,
+          "predicted_overlap_px": 1916,
+          "mean_reviewed_iou": 0.8811,
+          "mean_reviewed_boundary_f1_within_5px": 0.9392
+        },
+        "sam2": {
+          "predicted_instances": 36,
+          "matched_instances_iou_at_least_0_1": 36,
+          "predicted_overlap_px": 64780,
+          "mean_reviewed_iou": 0.9461,
+          "mean_reviewed_boundary_f1_within_5px": 0.9977
+        }
+      },
+      "image_sha256": "b595e1b9156a5a56d9c191ddc2f5b88f04dfc75de2bdff7dbc60208f82ed0093",
+      "reference_polygon_overlap_px": 50583
+    }
+  },
+  "limitations": [
+    "Labels came from source-image threshold tracing in manually selected regions and visual overlay review; not pixel-painted ground truth.",
+    "Only reviewed isolated contours contribute to IoU and F1 means.",
+    "The provisional reference polygons themselves overlap at touching/nested areas; those boundaries are excluded from contour means.",
+    "Touching margins, nested stickers, and disputed cut paths remain uncertain.",
+    "SAM receives human boxes, while classical and boundary-split methods are automatic.",
+    "The compared sheets and parameters were inspected during development; no untouched sheet-level result is claimed.",
+    "No browser or cutter integration was changed."
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "date": "2026-09-26",
+  "purpose": "Private noncommercial DIS5K object-mask training ablation for outer sticker contours",
+  "dataset": {
+    "source": "https://github.com/xuebinqin/DIS",
+    "partition": "DIS-TR only",
+    "archive_sha256": "54afa8cb4f1c71148a7be088f33807945741f17d834f84f896e7625a08c5eb42",
+    "subset_manifest_sha256": "86bf0aaa66d85c65087bcab9405b1ce6761f76a6545472ecb9ebdec86f195801",
+    "source_pairs": 240,
+    "training_pairs": 216,
+    "synthetic_validation_pairs": 24,
+    "storage": "Private local cache, excluded from repository and published artifacts"
+  },
+  "comparison": {
+    "v6": {
+      "model_pt_sha256": "a3d504370313aacca43d771b58cb70f849159bfecc717d2ae85abc511621ffbc",
+      "training": "Earlier sticker-sheet model"
+    },
+    "v10_dis5k": {
+      "model_pt_sha256": "638ec6ddec2a93aeebdbc2a12bc13b0ef171a476e483bb69c93772d3e17b8dff",
+      "best_step": 175,
+      "training": "V6 plus 180 steps: per batch 3 corrected portrait crops, 2 other real crops, 2 sticker collages, 1 DIS5K collage; frozen batch normalization and original-scene distillation weight 50"
+    },
+    "v11_no_public_control": {
+      "model_pt_sha256": "cd6730468d31c1b2c180fd8f72c181868936843713e054ef95ff928ecaff828d",
+      "best_step": 125,
+      "training": "Same seed, steps, optimizer and regularization as V10; replaces its one DIS5K collage per batch with an original-sticker collage"
+    }
+  },
+  "metrics": {
+    "synthetic_dis5k_validation_24_source_pairs": {
+      "v6": {"foreground_iou": 0.8319, "best_boundary_f1_at_0_2_0_35_or_0_5": 0.3147},
+      "v10_dis5k": {"foreground_iou": 0.8826, "best_boundary_f1_at_0_2_0_35_or_0_5": 0.4462},
+      "v11_no_public_control": {"foreground_iou": 0.8454, "best_boundary_f1_at_0_2_0_35_or_0_5": 0.3553}
+    },
+    "pastel_fairy_original": {
+      "intended_instances": 36,
+      "reviewed_contours": 21,
+      "v6": {"predicted_instances": 42, "matched_instances": 34, "mean_reviewed_iou": 0.8811, "boundary_f1_within_5px": 0.9392, "overlapping_path_pixels": 0},
+      "v10_dis5k": {"predicted_instances": 39, "matched_instances": 36, "mean_reviewed_iou": 0.9307, "boundary_f1_within_5px": 0.9974, "overlapping_path_pixels": 0},
+      "v11_no_public_control": {"predicted_instances": 38, "matched_instances": 36, "mean_reviewed_iou": 0.9294, "boundary_f1_within_5px": 0.9973, "overlapping_path_pixels": 0}
+    },
+    "grandma_portraits": {
+      "intended_instances": 8,
+      "reviewed_contours": 2,
+      "v6": {"predicted_instances": 8, "matched_instances": 8, "mean_reviewed_iou": 0.9526, "boundary_f1_within_5px": 0.8319},
+      "v10_dis5k": {"predicted_instances": 8, "matched_instances": 8, "mean_reviewed_iou": 0.9526, "boundary_f1_within_5px": 0.8265},
+      "v11_no_public_control": {"predicted_instances": 8, "matched_instances": 8, "mean_reviewed_iou": 0.9533, "boundary_f1_within_5px": 0.8293}
+    },
+    "grandma_grid_review_row_3": {
+      "v6": {"mean_foreground_iou": 0.9299, "boundary_f1_within_5px": 0.8765},
+      "v10_dis5k": {"mean_foreground_iou": 0.9318, "boundary_f1_within_5px": 0.8841},
+      "v11_no_public_control": {"mean_foreground_iou": 0.9314, "boundary_f1_within_5px": 0.8781}
+    },
+    "grandma_grid_confirmation_row_6": {
+      "v6": {"mean_foreground_iou": 0.9176, "boundary_f1_within_5px": 0.8733},
+      "v10_dis5k": {"mean_foreground_iou": 0.9218, "boundary_f1_within_5px": 0.8950},
+      "v11_no_public_control": {"mean_foreground_iou": 0.9212, "boundary_f1_within_5px": 0.8935}
+    },
+    "pirate_icons_pseudo_labels_at_0_5": {
+      "v6": {"foreground_iou": 0.9640, "boundary_f1": 0.5936},
+      "v10_dis5k": {"foreground_iou": 0.9597, "boundary_f1": 0.5569},
+      "v11_no_public_control": {"foreground_iou": 0.9611, "boundary_f1": 0.5737}
+    }
+  },
+  "postprocessing": {
+    "method": "Boundary watershed with identical thresholds and optional enclosed-island merge for every model",
+    "pastel_min_core_area": 500,
+    "grandma_min_core_area": 20000,
+    "merge_enclosed": true,
+    "observation": "The merge removes one false unicorn-eye path from each model and eliminates overlapping exported cut masks on the pastel sheet. The upper unicorn body remains split."
+  },
+  "interpretation": "Public masks improve synthetic DIS5K validation substantially, but the V10 versus V11 real-sheet differences are small and mixed. No clear real-sheet benefit from DIS5K has been established. The original pastel and grandma portrait references were used during development and are not untouched test sheets; 15 pastel and 6 grandma seams remain uncertain. Neither model is cut-safe or active in the browser."
+}

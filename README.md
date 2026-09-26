@@ -61,13 +61,20 @@ image into one cut. Separately overlapping stickers must be moved apart.
 
 1. Add an image and **Fit artwork to page** before analyzing. Select
    **Automatic cuts & outline editor**. Photo-only mode disables this feature.
-2. The initial pass uses transparency if present, otherwise colored/dark ink
-   on white. Choose a background color for nonwhite backgrounds. The padded
-   analysis border is excluded from transparency detection.
+2. The initial pass uses transparency if present, white-background detection
+   for white images, and adaptive detection for opaque images with a changing
+   color background. Adaptive mode estimates a smooth Lab-color backdrop and
+   includes bright white sticker rims. Choose a fixed background color when
+   that better describes the image. The padded analysis border is excluded
+   from transparency and background detection.
 3. Review the numbered groups. Click a motif to select it; Shift-click or
    use the multi-select list to merge groups. Split a group into connected
-   pieces, or assign individual pieces to another group/a new group. Small
-   detached accents often need this correction. Excluded pieces still print;
+   pieces, or assign individual pieces to another group/a new group. For
+   stickers that share a white rim, select their group, choose **Split touching
+   stickers with a line**, and click the two ends of the shared border. Place
+   the separator through white artwork; the narrow seam still prints but is
+   not treated as artwork to enclose in either cut. Small detached accents
+   often need correction. Excluded pieces still print;
    **Restore excluded pieces** brings them back as separate groups.
 4. Adjust border, bridge radius, smoothing, spacing and simplification in
    millimeters, then **Update contours**. Detection/grouping settings take
@@ -81,26 +88,69 @@ image into one cut. Separately overlapping stickers must be moved apart.
    grouping, parameters and manual overrides in a local JSON file. It does
    not store printer connections or submit jobs when reopened.
 
-The **Detailed collage** preset starts with 1.1 mm joining; **Larger, rounded
-motifs** uses 1.5 mm. These are starting points, not semantic segmentation.
+The **Detailed collage** preset starts with 1.1 mm joining, a 0.15 mm²
+minimum feature area, and 0.1 mm cut spacing; **Larger, rounded motifs** uses
+1.5 mm joining. These are starting points, not semantic segmentation.
 Joining can connect chains of nearby motifs. Keeping small decorations
 separate may instead create many small groups. Touching artwork is a single
-connected component: component splitting cannot infer a boundary through it;
-use custom outlines or edit the source image for such cases.
+connected component: automatic grouping cannot infer a boundary through it.
+Use the short separator line or a custom outline for such cases.
 
 To refine existing Python contours: add the corresponding **sheet.png**,
 import **contours.json**, then open the automatic editor. Existing contours
 become grouping regions; whole detected components are assigned by overlap
 and distance, just as in the Python preparation workflow.
 
+### Develop cut detection from the CLI
+
+The CLI runs the same OpenCV analyzer without opening the editor. It accepts
+PNG or JPEG, reports component/group counts and clipping warnings, and writes
+full analysis data plus labeled and unlabeled overlays. The default scale
+matches importing one image on a 4×7 sheet; `--fit` matches **Fit artwork to
+page**. Raster resizing is bilinear, so a few edge pixels may differ from a
+browser canvas.
+
+```sh
+npm run analyze:cuts -- path/to/sheet.jpg --fit --out /tmp/sheet-cuts
+npm run analyze:cuts -- path/to/sheet.jpg --set mode=adaptive --set join=0.8
+```
+
+Inspect `overlay.png` or numbered `overlay.svg` in the output directory.
+`components.png` colors each retained connected component and marks excluded
+ones red, so fused artwork is easy to distinguish from grouping mistakes.
+Compare `summary.json` across parameter changes. `analysis.json` includes component
+runs, group membership and final paths for deeper debugging. Use `--params
+settings.json` to load a parameter object, `--scale N` to match a specific
+Fabric object scale, and `--help` for usage. Source images and generated
+overlays are ignored by Git. The ML experiments expect local copies of the
+eight user-provided sheets under `ml/data/sheets/`; the image files are not
+committed.
+The [segmentation evaluation plan](docs/cut-segmentation-evaluation.md) records
+the current sample's failure cases and model experiments.
+
+### Segmentation model experiment
+
+[`ml/README.md`](ml/README.md) documents the reviewed training sheets, the
+small foreground/boundary model, its ONNX export, and exploratory full-sheet
+instance comparisons. [Public data candidates](docs/public-segmentation-datasets.md)
+are reviewed separately.
+The model is an offline experiment and is not used by the browser cut flow.
+
 ### Algorithm and safety
 
 - Pinned OpenCV.js 4.12 runs in a lazy-loaded Web Worker, entirely on-device.
   Its bundled WASM/JS worker is about 10.8 MB before HTTP compression. No CDN,
   image upload, cross-origin isolation, or native bridge is required.
-- HSV/background/alpha masking → connected components → distance-based
+- Alpha/white/fixed-color/adaptive Lab masking → connected components → distance-based
   grouping → dilation, closing, opening and Gaussian smoothing → nearest
   artwork ownership partition → external contours and polygon simplification.
+- Adaptive masking interpolates exposed edge colors through background pixels
+  between motifs and grows the smooth background around white sticker rims.
+  Adaptive grouping starts from substantial connected shapes and assigns each
+  nearby small detail to one shape. Isolated tiny glints are left out of the
+  cuts but still print; **Restore excluded pieces** can turn them into cuts.
+  A user-drawn separator line can divide a connected component at a shared
+  rim; it is not a semantic object detector.
 - Refinement processes cropped group regions; distance images are released
   incrementally rather than retaining a full group × sheet stack. OpenCV
   matrices are disposed in `finally` blocks. Cancel terminates the worker;

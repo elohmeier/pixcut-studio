@@ -1,0 +1,122 @@
+{
+  "input": "../../sheets/pirate-girl.jpeg",
+  "objectScale": 1.139240506329114,
+  "raster": {
+    "factor": 1,
+    "pad": 125,
+    "pxPerMM": 10.36745406824147,
+    "width": 1198,
+    "height": 1909,
+    "contentWidth": 948,
+    "contentHeight": 1659,
+    "contentRect": [
+      125,
+      125,
+      948,
+      1659
+    ]
+  },
+  "mode": "white",
+  "seconds": 1.289,
+  "components": 26,
+  "excludedComponentIds": [],
+  "groups": [
+    {
+      "number": 1,
+      "componentIds": [
+        1,
+        4,
+        16,
+        21,
+        28,
+        29,
+        33,
+        44,
+        46,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        68,
+        69,
+        70,
+        71
+      ],
+      "outlines": 1,
+      "vertices": [
+        785
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 2,
+      "componentIds": [
+        12
+      ],
+      "outlines": 1,
+      "vertices": [
+        28
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 3,
+      "componentIds": [
+        13
+      ],
+      "outlines": 1,
+      "vertices": [
+        41
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 4,
+      "componentIds": [
+        14
+      ],
+      "outlines": 1,
+      "vertices": [
+        37
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 5,
+      "componentIds": [
+        22
+      ],
+      "outlines": 1,
+      "vertices": [
+        25
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 6,
+      "componentIds": [
+        38
+      ],
+      "outlines": 1,
+      "vertices": [
+        21
+      ],
+      "clippedPixels": 0
+    },
+    {
+      "number": 7,
+      "componentIds": [
+        45
+      ],
+      "outlines": 1,
+      "vertices": [
+        49
+      ],
+      "clippedPixels": 0
+    }
+  ],
+  "issues": []
+}

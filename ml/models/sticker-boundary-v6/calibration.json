@@ -1,0 +1,8 @@
+{
+  "source": "grandma-grid hand-corrected review and pirate-icons pseudo-label sweep",
+  "label_warning": "The hand-corrected review instances were used during model iteration; pirate-icons uses approximate expanded CLI masks",
+  "foreground_threshold": 0.5,
+  "foreground_reason": "Preserves pale white hair; on the four reviewed grandmother stickers mean IoU is 0.9299 at 0.5 versus 0.9050 at 0.775",
+  "pirate_icons_pseudo_label_optimum": 0.775,
+  "boundary_threshold": 0.8
+}
